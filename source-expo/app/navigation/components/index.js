@@ -3,13 +3,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import { Icon, Text } from '@/components';
 import { BaseColor, BaseStyle, useTheme } from '@/config';
+import { useSelector } from 'react-redux';
 
 export const tabBarIcon = ({ color, name }) => <Icon name={name} size={20} solid color={color} />;
 
-export const tabBarIconHaveNoty = ({ color, name }) => (
+export const tabBarIconHaveNoty = ({ color, name }) => {
+  const { declarations } = useSelector((state) => state.declarationYYS);
+
+  return (
   <View>
     {tabBarIcon({ color, name })}
-    <View
+    {declarations.length > 0 && <View
       style={{
         borderWidth: 1,
         borderColor: BaseColor.whiteColor,
@@ -25,11 +29,11 @@ export const tabBarIconHaveNoty = ({ color, name }) => (
       }}
     >
       <Text whiteColor caption2>
-        5
+        {declarations.length}
       </Text>
-    </View>
+    </View>}
   </View>
-);
+)};
 
 const BottomTab = createBottomTabNavigator();
 

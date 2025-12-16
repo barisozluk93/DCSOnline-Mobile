@@ -14,6 +14,11 @@ export const listDeclarationRequest = async (musteriid, page, pageSize) => {
   return response.data;
 };
 
+export const listDeclarationYYSRequest = async (musteriid) => {
+  const response = await api.get("/declaration/unapproved-yys?musteriid=" + musteriid);
+  return response;
+};
+
 export const listDeclarationArchieveRequest = async (declarationid) => {
   const response = await api.get(`/declaration/${declarationid}/archives`);
   return response.data;

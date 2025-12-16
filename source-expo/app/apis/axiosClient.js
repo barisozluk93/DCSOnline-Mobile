@@ -59,9 +59,7 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = await loadRefreshToken();
-        console.log("Refresh Token : " + refreshToken);
         if (!refreshToken) {
-          console.log("No refresh Token");
           throw new Error("No refresh token");
         }
 

@@ -16,4 +16,14 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 20
   },
+  container: {
+    height: 50,
+    width: 140,
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    paddingTop: 8,
+    paddingLeft: 5,
+    marginLeft: -15
+  },
 });

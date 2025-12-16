@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, TouchableOpacity } from 'react-native';
 import { BaseStyle, useTheme, BaseColor } from '@/config';
 import * as Utils from '@/utils';
-import { Header, Dashboard, SafeAreaView, TabTag, HeaderLargeTitleBadge, Tag, Icon } from '@/components';
+import { Header, Dashboard, SafeAreaView, Text, TabTag, HeaderLargeTitleBadge, Tag, Icon } from '@/components';
 import styles from './styles';
 import { useSelector } from 'react-redux';
 
@@ -11,7 +11,7 @@ const PHome = (props) => {
   const { navigation } = props;
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { selectedAuthorizedFirm } = useSelector(state => state.user);
+  const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
 
   const DashboardData = [
     {
@@ -468,7 +468,7 @@ const PHome = (props) => {
 
   const renderContent = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <TabTag
           style={{ height: 30 }}
           tabs={tabs}
@@ -514,7 +514,17 @@ const PHome = (props) => {
 
   return (
     <SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
-      <Header title={t('dashboard')} style={{ height: 36 }}
+      <Header title={t('dashboard')}
+        renderLeft={() => {
+          if (authorizedFirms) {
+            return (
+              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
+                <Text style={{ width: 115 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+                <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
+              </TouchableOpacity>
+            );
+          }
+        }}
         renderRight={() => {
           return (
             <View style={styles.notification}>

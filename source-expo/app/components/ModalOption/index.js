@@ -13,7 +13,7 @@ const ModalOption = (props) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const cardColor = colors.card;
-  const { options = [], value = {}, onPress, isMulti = false, ...attrs } = props;
+  const { options = [], value = {}, onPress, onBackdropPress, isMulti = false, ...attrs } = props;
   const [optionCustom, setOptionCustom] = useState(options);
 
   useEffect(() => {
@@ -36,6 +36,10 @@ const ModalOption = (props) => {
     onPress(optionCustom.filter((item) => item.checked));
   };
 
+  const onBackdropPressApply = () => {
+    onBackdropPress();
+  }
+
   const onSelect = (itemChose) => {
     if (isMulti) {
       const optionsMulti = optionCustom.map((item) => ({
@@ -57,7 +61,7 @@ const ModalOption = (props) => {
   };
 
   return (
-    <Modal swipeDirection={['up']} style={styles.bottomModal} {...attrs}>
+    <Modal onBackdropPress={() => { onBackdropPressApply() }} swipeDirection={['down']} style={styles.bottomModal} {...attrs}>
       <View style={[styles.contentFilterBottom, { backgroundColor: cardColor }]}>
         <View style={styles.contentSwipeDown}>
           <View style={styles.lineSwipeDown} />

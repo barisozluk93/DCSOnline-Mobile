@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { FlatList, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { Header, ModalOption, Text, SafeAreaView, HeaderLargeTitleBadge, Icon, Declaration } from '@/components';
+import { Header, ModalOption, Text, SafeAreaView, HeaderLargeTitleBadge, Icon, Declaration, NotFound } from '@/components';
 import { BaseStyle, useTheme } from '@/config';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { listDeclaration } from '@/actions/declaration';
 import { listDeclarationArchieveRequest } from '@/apis/declarationApi';
 
-const PHome = () => {
+const PProject = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { colors } = useTheme();
@@ -18,29 +18,11 @@ const PHome = () => {
   const [beyannameid, setBeyannameid] = useState(undefined);
   const [files, setFiles] = useState([]);
   const [selectedFileOption, setSelectedFileOption] = useState();
-  const [showAuthorizedFirmsAction, setShowAuthorizedFirmsAction] = useState(false);
-  const {authorizedFirms, selectedAuthorizedFirm} = useSelector((state) => state.user);
-  const {loading, declarations, page, totalPages} = useSelector((state) => state.declaration);
+  const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
+  const { loading, declarations, page, totalPages } = useSelector((state) => state.declaration);
   const [currentPage, setCurrentPage] = useState(1);
-  const [authorizedFirmsList, setAuthorizedFirmsList] = useState([]);
-  const [selectedAuthorizedFirmOption, setSelectedAuthorizedFirmOption] = useState();
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
-
-  useEffect(() => {
-    if(authorizedFirms) {
-      let list = [];
-      authorizedFirms.forEach(element => {
-        list.push({ value: element.musteriid + "", text: element.name })
-
-        if (element.musteriid === selectedAuthorizedFirm) {
-          setSelectedAuthorizedFirmOption({ value: element.musteriid, text: element.name })
-        }
-      });
-
-      setAuthorizedFirmsList(list);
-    }
-  }, [authorizedFirms, showAuthorizedFirmsAction])
 
   useEffect(() => {
     fetchData();
@@ -58,23 +40,19 @@ const PHome = () => {
     dispatch(listDeclaration(selectedAuthorizedFirm, currentPage, 6));
   }
 
-  const authrizedFirmOptionSelected = (value) => {
-    setSelectedAuthorizedFirmOption(value);
-    dispatch({ type: 'SET_SELECTED_AUTH_FIRM', payload: value.value });
-    setShowAuthorizedFirmsAction(false);
-  };
-
   const setSelectedItem = (beyannameid) => {
+    setSelectedFileOption();
     setBeyannameid(beyannameid);
-    setShowFilesAction(true);
-
     listDeclarationArchieveRequest(beyannameid).then(response => {
       let list = [];
+      setFiles([]);
+
       response.forEach(element => {
         list.push({ value: element.arsivid + "", text: element.ad })
       });
 
-      setFiles([...list]);      
+      setFiles([...list]);
+      setShowFilesAction(true);
     });
   }
 
@@ -82,7 +60,7 @@ const PHome = () => {
     setSelectedFileOption(value);
     setShowFilesAction(false);
 
-    navigation.navigate('PProjectView', { item: {refid: declarations.filter(f => f.beyannameid === beyannameid)[0].refid, arsivid: value.value, beyannameid: beyannameid} });
+    navigation.navigate('PProjectView', { item: { refid: declarations.filter(f => f.beyannameid === beyannameid)[0].refid, arsivid: value.value, beyannameid: beyannameid } });
   };
 
   return (
@@ -92,7 +70,7 @@ const PHome = () => {
         renderLeft={() => {
           if (authorizedFirms) {
             return (
-              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => { setShowAuthorizedFirmsAction(true) }}>
+              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
                 <Text style={{ width: 115 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
                 <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
               </TouchableOpacity>
@@ -109,6 +87,8 @@ const PHome = () => {
         onPressRight={() => {
         }}
       />
+      {!loading && declarations && declarations.length === 0 && <NotFound />}
+
       {!loading && <FlatList
         style={{ marginTop: 10 }}
         showsHorizontalScrollIndicator={false}
@@ -129,9 +109,11 @@ const PHome = () => {
               marginBottom: 20,
             }}
           />
+
+
         )}
       />}
-      {!loading && <View style={{ flexDirection: "row", justifyContent: "center", padding: 16 }}>
+      {!loading && declarations && declarations.length > 0 && <View style={{ flexDirection: "row", justifyContent: "center", padding: 16 }}>
         <TouchableOpacity
           disabled={page === 1}
           onPress={() => setCurrentPage(page - 1)}
@@ -154,12 +136,12 @@ const PHome = () => {
           <Text style={{ borderRadius: 8, height: 30, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>{t('next')}›</Text>
         </TouchableOpacity>
       </View>}
+
       {loading ? (
-        <ActivityIndicator size="large" style={{ margin: 20 }} />
+        <ActivityIndicator size="x-large" style={{ margin: 20, textAlign: "center" }} />
       ) : null
       }
-      {files && files.length > 0 && <ModalOption
-
+      {showFilesAction && files && files.length > 0 && <ModalOption
         value={selectedFileOption}
         options={files}
         isVisible={showFilesAction}
@@ -169,21 +151,12 @@ const PHome = () => {
         onPress={(value) => {
           fileOptionSelected(value)
         }}
-      />}
-      {authorizedFirmsList.length > 0 && <ModalOption
-
-        value={selectedAuthorizedFirmOption}
-        options={authorizedFirmsList}
-        isVisible={showAuthorizedFirmsAction}
-        onSwipeComplete={() => {
-          setShowAuthorizedFirmsAction(false);
-        }}
-        onPress={(value) => {
-          authrizedFirmOptionSelected(value)
+        onBackdropPress={() => {
+          setShowFilesAction(false)
         }}
       />}
     </SafeAreaView>
   );
 };
 
-export default PHome;
+export default PProject;

@@ -30,7 +30,7 @@ export const NewsTabScreens = {
     component: PTask,
     options: {
       title: 'tasks',
-      tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'tasks' }),
+      tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'tasks'}),
     },
   },
   Profile: {

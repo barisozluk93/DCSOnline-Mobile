@@ -7,11 +7,14 @@ import PTaskCreate from '@/screens/PTaskCreate';
 import PTaskView from '@/screens/PTaskView';
 import PTask from '@/screens/PTask';
 import PFilter from '@/screens/PFilter';
+import PAuthorizedFirmFilter from '@/screens/PAuthorizedFirmFilter';
 import Profile from '@/screens/Profile';
 import PSelectAssignee from '@/screens/PSelectAssignee';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
+import { useSelector } from 'react-redux';
 
 export const NewsTabScreens = {
+
   PHome: {
     component: PHome,
     options: {
@@ -45,6 +48,7 @@ export const NewsTabScreens = {
 const ProjectMenu = () => <BottomTabNavigatorMazi tabScreens={NewsTabScreens} />;
 
 export default {
+
   ProjectMenu: {
     component: ProjectMenu,
     options: {
@@ -77,6 +81,12 @@ export default {
   },
   PFilter: {
     component: PFilter,
+    options: {
+      title: 'filter',
+    },
+  },
+  PAuthorizedFirmFilter: {
+    component: PAuthorizedFirmFilter,
     options: {
       title: 'filter',
     },
