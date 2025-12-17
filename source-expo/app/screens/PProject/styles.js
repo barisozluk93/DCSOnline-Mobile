@@ -6,6 +6,8 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 15,
     marginBottom: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
   },
   notification: {
     position: 'relative',

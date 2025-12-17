@@ -1,5 +1,6 @@
 const initialState = {
   declarations: null,
+  filters: null,
   page: null,
   pageSize: null,
   totalPages: null,
@@ -28,6 +29,12 @@ export default function declarationReducer(state = initialState, action) {
     case 'DECLARATION_LIST_FAIL':
       return { ...state, loading: false, error: action.payload };
     
+    case 'DECLARATION_SET_FILTER':
+      return {
+        ...state,
+        filters: action.payload,
+      };
+
     case 'DECLARATION_INIT':
       return initialState;
 

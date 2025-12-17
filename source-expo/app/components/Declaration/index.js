@@ -50,6 +50,46 @@ const Declaration = ({
           rejim: t(rejimTip),
           rejimColor: BaseColor.yellowColor,
         };
+      case 'DG':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'DI':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'DP':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'MI':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'OB':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'SB':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'TE':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.blueColor,
+        };
+      case 'UZ':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.pinkDarkColor,
+        };
       default:
         return {
           rejim: t(rejimTip),

@@ -8,10 +8,10 @@ import PTaskView from '@/screens/PTaskView';
 import PTask from '@/screens/PTask';
 import PFilter from '@/screens/PFilter';
 import PAuthorizedFirmFilter from '@/screens/PAuthorizedFirmFilter';
+import PDeclarationFilter from '@/screens/PDeclarationFilter';
 import Profile from '@/screens/Profile';
 import PSelectAssignee from '@/screens/PSelectAssignee';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
-import { useSelector } from 'react-redux';
 
 export const NewsTabScreens = {
 
@@ -87,6 +87,12 @@ export default {
   },
   PAuthorizedFirmFilter: {
     component: PAuthorizedFirmFilter,
+    options: {
+      title: 'filter',
+    },
+  },
+  PDeclarationFilter: {
+    component: PDeclarationFilter,
     options: {
       title: 'filter',
     },

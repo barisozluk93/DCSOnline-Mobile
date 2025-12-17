@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { FlatList, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { Header, ModalOption, Text, SafeAreaView, HeaderLargeTitleBadge, Icon, Declaration, NotFound } from '@/components';
-import { BaseStyle, useTheme } from '@/config';
+import { FlatList, TouchableOpacity, View, ActivityIndicator, StyleSheet } from 'react-native';
+import { Header, ModalOption, Text, SafeAreaView, HeaderLargeTitleBadge, Icon, Declaration, NotFound, Tag } from '@/components';
+import { BaseColor, BaseStyle, useTheme } from '@/config';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { listDeclaration } from '@/actions/declaration';
@@ -19,7 +19,7 @@ const PProject = () => {
   const [files, setFiles] = useState([]);
   const [selectedFileOption, setSelectedFileOption] = useState();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
-  const { loading, declarations, page, totalPages } = useSelector((state) => state.declaration);
+  const { loading, declarations, page, totalPages, filters } = useSelector((state) => state.declaration);
   const [currentPage, setCurrentPage] = useState(1);
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
@@ -27,6 +27,14 @@ const PProject = () => {
   useEffect(() => {
     fetchData();
   }, [selectedAuthorizedFirm])
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        dispatch({ type: 'DECLARATION_SET_FILTER', payload: [] });
+      };
+    }, [])
+  );
 
   useEffect(() => {
     fetchData();
@@ -36,8 +44,12 @@ const PProject = () => {
     fetchData();
   }, [currentPage])
 
+  useEffect(() => {
+    fetchData();
+  }, [filters])
+
   const fetchData = () => {
-    dispatch(listDeclaration(selectedAuthorizedFirm, currentPage, 6));
+    dispatch(listDeclaration(selectedAuthorizedFirm, currentPage, 4, filters));
   }
 
   const setSelectedItem = (beyannameid) => {
@@ -87,6 +99,53 @@ const PProject = () => {
         onPressRight={() => {
         }}
       />
+
+      {!loading &&
+        <>
+          <View style={{ flexDirection: "row", padding: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border }}>
+            <Tag
+              gray
+              style={{
+                borderRadius: 3,
+                backgroundColor: BaseColor.kashmir,
+                marginHorizontal: 5,
+                paddingVertical: 3,
+                marginRight: 35
+              }}
+              textStyle={{
+                paddingHorizontal: 4,
+                color: BaseColor.whiteColor,
+              }}
+              icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={10} />}
+              onPress={() => navigation.navigate('PDeclarationFilter')}
+            >
+              {t('filter')}
+            </Tag>
+            
+            <TouchableOpacity
+              disabled={page === 1}
+              onPress={() => setCurrentPage(page - 1)}
+              style={{ marginHorizontal: 6, opacity: page === 1 ? 0.4 : 1 }}
+            >
+              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>‹ {t('prev')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity disabled={true}>
+              <Text style={{ borderRadius: 8, width: 30, height: 25, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16, padding: 3 }}>
+                {page}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              disabled={page === totalPages}
+              onPress={() => setCurrentPage(page + 1)}
+              style={{ marginHorizontal: 6, opacity: page === totalPages ? 0.4 : 1 }}
+            >
+              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>{t('next')}›</Text>
+            </TouchableOpacity>
+          </View>
+        </>}
+      
       {!loading && declarations && declarations.length === 0 && <NotFound />}
 
       {!loading && <FlatList
@@ -113,29 +172,6 @@ const PProject = () => {
 
         )}
       />}
-      {!loading && declarations && declarations.length > 0 && <View style={{ flexDirection: "row", justifyContent: "center", padding: 16 }}>
-        <TouchableOpacity
-          disabled={page === 1}
-          onPress={() => setCurrentPage(page - 1)}
-          style={{ marginHorizontal: 6, opacity: page === 1 ? 0.4 : 1 }}
-        >
-          <Text style={{ borderRadius: 8, height: 30, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>‹ {t('prev')}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity disabled={true}>
-          <Text style={{ borderRadius: 8, width: 30, height: 30, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16, padding: 5 }}>
-            {page}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          disabled={page === totalPages}
-          onPress={() => setCurrentPage(page + 1)}
-          style={{ marginHorizontal: 6, opacity: page === totalPages ? 0.4 : 1 }}
-        >
-          <Text style={{ borderRadius: 8, height: 30, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>{t('next')}›</Text>
-        </TouchableOpacity>
-      </View>}
 
       {loading ? (
         <ActivityIndicator size="x-large" style={{ margin: 20, textAlign: "center" }} />

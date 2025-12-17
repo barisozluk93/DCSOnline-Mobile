@@ -23,21 +23,22 @@ const SignIn = (props) => {
   const [password, setPassword] = useState();
   const [success, setSuccess] = useState(successInit);
   const { loading, error, token } = useSelector((state) => state.auth);
-  const { selectedAuthorizedFirm } = useSelector((state) => state.user);
-  const { declarations } = useSelector((state) => state.declaration);
 
-  useEffect(async () => {
-    let access_token = await loadToken();
-    if(access_token) {
-      dispatch(getUser());
-      dispatch(getUserAuthorizedFirms());
-    }
-    else{
-      dispatch({type: "AUTH_LOGOUT"});
-      dispatch({type: "USER_INIT"});
-      dispatch({type: "DECLARATION_INIT"});
-    }
+  useEffect(() => {
+    const loadToken = async () => {
+      let access_token = await loadToken();
+      if(access_token) {
+        dispatch(getUser());
+        dispatch(getUserAuthorizedFirms());
+      }
+      else{
+        dispatch({type: "AUTH_LOGOUT"});
+        dispatch({type: "USER_INIT"});
+        dispatch({type: "DECLARATION_INIT"});
+      }
+    };
 
+    loadToken();
   }, [navigation])
 
   useEffect(() => {

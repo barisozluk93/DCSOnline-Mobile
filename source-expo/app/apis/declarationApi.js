@@ -1,11 +1,11 @@
 import api from './axiosClient';
 
-export const listDeclarationRequest = async (musteriid, page, pageSize) => {
+export const listDeclarationRequest = async (musteriid, page, pageSize, filters) => {
   let data = {
     musteriid: musteriid,
     page: page,
     pageSize: pageSize,
-    filters: [],
+    filters: filters,
     orderBy: "tesciltarihi",
     orderDir: "desc"
   }

@@ -75,7 +75,7 @@ const PAuthorizedFirmFilter = (props) => {
                 <View style={{ flexDirection: 'column' }}>
                   <TouchableOpacity onPress={() => onItemSelected(item)} style={{
                     flexDirection: 'row',
-                  }} key={`${item.musteriid}`}>
+                  }} key={`${index}`}>
                     {(item.musteriid === selectedItem) && <Icon name="check" size={14} color={colors.primary} />}
                     <View>
                       <Text body2 style={{ color: (item.musteriid === selectedItem) ? colors.primary : colors.text }}>
