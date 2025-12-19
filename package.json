@@ -1,7 +1,7 @@
 {
-  "name": "react-mazi",
+  "name": "dcs-online",
   "version": "1.0.0",
-  "description": "This is Mazi project",
+  "description": "DCS Online Mobile App",
   "directories": {
     "doc": "docs"
   },

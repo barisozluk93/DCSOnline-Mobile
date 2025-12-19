@@ -1,5 +1,15 @@
 import api from './axiosClient';
 
+export const getByRefId = async (refid) => {
+  const response = await api.get("/declaration/refid/" + refid);
+  return response;
+};
+
+export const getDetailById = async (declarationid) => {
+  const response = await api.get("/declaration/" + declarationid);
+  return response;
+};
+
 export const listDeclarationRequest = async (musteriid, page, pageSize, filters) => {
   let data = {
     musteriid: musteriid,
@@ -27,7 +37,22 @@ export const listDeclarationArchieveRequest = async (declarationid) => {
 export const getDeclarationPDF = async (declarationid, archiveid) => {
   const response = await api.post(`/declaration/${declarationid}/archives/download`, {
     arsivIds: [archiveid]
+  }, {
+    responseType: 'arraybuffer',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   return response.data;
 };
+
+export const approveYYS = async (declarationid, musteriid) => {
+  const response = await api.put(`/declaration/${declarationid}/approve-yys`, {
+    beyannameid: declarationid,
+    musteriid: musteriid
+  });
+  return response.data;
+};
+
+
 

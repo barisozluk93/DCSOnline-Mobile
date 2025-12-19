@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
-    height: Utils.scaleWithPixel(50),
+    height: Utils.scaleWithPixel(40),
   },
   image: {
     height: Utils.scaleWithPixel(40),

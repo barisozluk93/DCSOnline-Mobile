@@ -24,31 +24,19 @@ const PProject = () => {
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedAuthorizedFirm])
-
   useFocusEffect(
     useCallback(() => {
+      fetchData();
+
       return () => {
-        dispatch({ type: 'DECLARATION_SET_FILTER', payload: [] });
+        dispatch({ type: 'DECLARATION_INIT'});
       };
-    }, [])
+    }, [selectedAuthorizedFirm, currentPage, filters])
   );
 
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  useEffect(() => {
-    fetchData();
-  }, [currentPage])
-
-  useEffect(() => {
-    fetchData();
-  }, [filters])
-
   const fetchData = () => {
+    console.log("fetch data girdim");
+    console.log("selectedAuthorizedFirm : " + selectedAuthorizedFirm)
     dispatch(listDeclaration(selectedAuthorizedFirm, currentPage, 4, filters));
   }
 
@@ -83,7 +71,7 @@ const PProject = () => {
           if (authorizedFirms) {
             return (
               <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-                <Text style={{ width: 115 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+                <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
                 <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
               </TouchableOpacity>
             );
@@ -127,11 +115,11 @@ const PProject = () => {
               onPress={() => setCurrentPage(page - 1)}
               style={{ marginHorizontal: 6, opacity: page === 1 ? 0.4 : 1 }}
             >
-              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>‹ {t('prev')}</Text>
+              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>‹ {t('prev')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity disabled={true}>
-              <Text style={{ borderRadius: 8, width: 30, height: 25, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16, padding: 3 }}>
+              <Text style={{ borderRadius: 8, width: 30, height: 25, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16 }}>
                 {page}
               </Text>
             </TouchableOpacity>
@@ -141,7 +129,7 @@ const PProject = () => {
               onPress={() => setCurrentPage(page + 1)}
               style={{ marginHorizontal: 6, opacity: page === totalPages ? 0.4 : 1 }}
             >
-              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16, padding: 5 }}>{t('next')}›</Text>
+              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>{t('next')}›</Text>
             </TouchableOpacity>
           </View>
         </>}
@@ -174,7 +162,7 @@ const PProject = () => {
       />}
 
       {loading ? (
-        <ActivityIndicator size="x-large" style={{ margin: 20, textAlign: "center" }} />
+        <ActivityIndicator size="large" style={{ flex: 1 }} />
       ) : null
       }
       {showFilesAction && files && files.length > 0 && <ModalOption

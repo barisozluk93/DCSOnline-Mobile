@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TouchableOpacity, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { TouchableOpacity, View, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { BaseColor, BaseStyle, useTheme, Images } from '@/config';
@@ -8,6 +8,7 @@ import styles from './styles';
 import { login } from '@/actions/auth';
 import { getUser, getUserAuthorizedFirms } from '@/actions/user';
 import { loadToken } from '@/utils/storage';
+import Toast from 'react-native-toast-message';
 
 const successInit = {
   id: true,
@@ -25,21 +26,14 @@ const SignIn = (props) => {
   const { loading, error, token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const loadToken = async () => {
-      let access_token = await loadToken();
-      if(access_token) {
-        dispatch(getUser());
-        dispatch(getUserAuthorizedFirms());
-      }
-      else{
-        dispatch({type: "AUTH_LOGOUT"});
-        dispatch({type: "USER_INIT"});
-        dispatch({type: "DECLARATION_INIT"});
-      }
-    };
-
-    loadToken();
-  }, [navigation])
+    var access_token = loadToken();
+    if (!access_token) {
+      dispatch({ type: "AUTH_LOGOUT" });
+      dispatch({ type: "USER_INIT" });
+      dispatch({ type: "DECLARATION_INIT" });
+      dispatch({ type: "DECLARATION_YYS_INIT" });
+    }
+  }, [navigation]);
 
   useEffect(() => {
     if (token) {
@@ -48,11 +42,17 @@ const SignIn = (props) => {
 
       navigation.navigate('ProjectMenu');
     }
-    else{
-      dispatch({type: "USER_INIT"});
-      dispatch({type: "DECLARATION_INIT"});
-    }
   }, [token]);
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: t('error'),
+        text2: t('error_login_message'),
+      });
+    }
+  }, [error]);
 
   const onLogin = async () => {
     if (id !== '' && password !== '') {

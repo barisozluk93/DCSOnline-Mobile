@@ -16,7 +16,7 @@ export default function declarationYYSReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        declarations: action.payload.data,
+        declarations: action.payload,
       };
 
     case 'DECLARATION_YYS_LIST_FAIL':

@@ -26,8 +26,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "file-invoice",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#58D68D",
               marginRight: 8
             }
@@ -40,8 +40,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "receipt",
             style: {
-              height: (Utils.getHeightDevice() - 266) / 4,
-              width: (Utils.getWidthDevice() - 36) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
               backgroundColor: "#E5634D"
             }
           },
@@ -53,8 +53,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "dollar-sign",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#5DADE2",
               marginRight: 8
 
@@ -68,8 +68,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "lira-sign",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#FDC60A"
             }
           },
@@ -99,8 +99,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 28),
-              height: ((Utils.getHeightDevice() - 250) / 2),
+              width: (Utils.getWidthDevice() - 20),
+              height: (Utils.heightTabView() - 140) / 2,
             }
           },
         ]
@@ -148,8 +148,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 250) / 2,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 120) / 2,
               marginRight: 8
             }
           },
@@ -180,8 +180,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 250) / 2,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 120) / 2,
             }
           },
           {
@@ -223,8 +223,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 28),
-              height: (Utils.getHeightDevice() - 250) / 2
+              width: (Utils.getWidthDevice() - 20),
+              height: (Utils.heightTabView() - 140) / 2
             }
           },
         ]
@@ -241,8 +241,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "pencil-ruler",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#58D68D",
               marginRight: 8
             }
@@ -255,8 +255,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "receipt",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#E5634D"
             }
           },
@@ -268,8 +268,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "dollar-sign",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#5DADE2",
               marginRight: 8
 
@@ -283,8 +283,8 @@ const PHome = (props) => {
             byParameter: '',
             icon: "box",
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 266) / 4,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 140) / 4,
               backgroundColor: "#FDC60A"
             }
           },
@@ -314,8 +314,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 28),
-              height: (Utils.getHeightDevice() - 250) / 2
+              width: (Utils.getWidthDevice() - 20),
+              height: (Utils.heightTabView() - 140) / 2
             }
           },
         ]
@@ -363,8 +363,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 250) / 2,
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 120) / 2,
               marginRight: 8
 
             }
@@ -396,8 +396,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: (Utils.getWidthDevice() - 36) / 2,
-              height: (Utils.getHeightDevice() - 250) / 2
+              width: (Utils.getWidthDevice() - 28) / 2,
+              height: (Utils.heightTabView() - 120) / 2
             }
           },
           {
@@ -439,8 +439,8 @@ const PHome = (props) => {
               },
             ],
             style: {
-              width: Utils.getWidthDevice() - 28,
-              height: (Utils.getHeightDevice() - 250) / 2
+              width: Utils.getWidthDevice() - 20,
+              height: (Utils.heightTabView() - 140) / 2
             }
           },
         ]
@@ -460,7 +460,6 @@ const PHome = (props) => {
   const [tab, setTab] = useState(tabs[0]);
 
   const dashboardData = useMemo(() => {
-    Utils.enableExperimental();
     return DashboardData.filter((data) => data.type === tab.id);
   }, [tab]);
 
@@ -470,30 +469,12 @@ const PHome = (props) => {
     return (
       <View style={{ flex: 1, marginTop: 10 }}>
         <TabTag
-          style={{ height: 30 }}
+          style={{height: 30}}
           tabs={tabs}
           tab={tab}
           onChange={(tabData) => setTab(tabData)}
         />
-        <View style={[styles.filter, { borderColor: colors.border }]}>
-          <Tag
-            gray
-            style={{
-              borderRadius: 3,
-              backgroundColor: BaseColor.kashmir,
-              marginHorizontal: 5,
-              paddingVertical: 3,
-            }}
-            textStyle={{
-              paddingHorizontal: 4,
-              color: BaseColor.whiteColor,
-            }}
-            icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={10} />}
-            onPress={() => navigation.navigate('PFilter')}
-          >
-            {t('filter')}
-          </Tag>
-        </View>
+        
         <FlatList
           contentContainerStyle={styles.paddingFlatList}
           horizontal
@@ -517,13 +498,13 @@ const PHome = (props) => {
       <Header title={t('dashboard')}
         renderLeft={() => {
           if (authorizedFirms) {
-            return (
-              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-                <Text style={{ width: 115 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
-                <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
-              </TouchableOpacity>
-            );
-          }
+          return (
+            <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
+                <Text style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+              <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
+            </TouchableOpacity>
+          );
+        }
         }}
         renderRight={() => {
           return (

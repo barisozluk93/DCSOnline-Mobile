@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   container: {
     height: 50,
-    width: 140,
+    width: 120,
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',

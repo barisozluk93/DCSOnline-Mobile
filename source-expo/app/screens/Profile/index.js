@@ -26,9 +26,10 @@ const Profile = (props) => {
    * @date 2019-09-01
    */
   const onLogOut = () => {
-    dispatch(
-      logout()
-    );
+    dispatch(logout());
+    dispatch({type: "USER_INIT"});
+    dispatch({type: "DECLARATION_INIT"});
+    dispatch({type: "DECLARATION_YYS_INIT"});
     navigation.navigate('SignIn');
   };
 

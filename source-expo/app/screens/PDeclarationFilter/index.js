@@ -157,7 +157,7 @@ const PDeclarationFilter = (props) => {
       filter.push({field: 'istakipdurum', op: 'like', value: '%' + status + '%'});
     }
 
-    dispatch({ type: 'DECLARATION_SET_FILTER', payload: filter });
+    dispatch({ type: 'DECLARATION_SET_FILTER', payload: filter.length > 0 ? filter : null });
     navigation.goBack();
   };
 

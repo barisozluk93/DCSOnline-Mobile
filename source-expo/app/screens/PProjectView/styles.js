@@ -4,6 +4,5 @@ import { BaseColor } from '@/config';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
   }
 });

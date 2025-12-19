@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { FlatList, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { Header, ModalOption, Text, SafeAreaView, HeaderLargeTitleBadge, DeclarationYYS, Icon, NotFound } from '@/components';
+import { Header, Text, SafeAreaView, HeaderLargeTitleBadge, DeclarationYYS, Icon, NotFound } from '@/components';
 import { BaseStyle, useTheme } from '@/config';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { listDeclarationYYS } from '@/actions/declaration';
-import { listDeclarationRequest, listDeclarationYYSRequest } from '@/apis/declarationApi';
+import { approveYYS, getByRefId, getDetailById, listDeclarationYYSRequest } from '@/apis/declarationApi';
+import Toast from 'react-native-toast-message';
+import { Alert } from 'react-native';
+import { useCallback, useEffect } from 'react';
 
 const PTask = () => {
   const dispatch = useDispatch();
@@ -19,16 +20,70 @@ const PTask = () => {
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedAuthorizedFirm])
+  const confirmYYSApprove = (item) => {
+    Alert.alert(
+      "",
+      t('sure'),
+      [
+        { text: t('cancel'), style: 'cancel' },
+        {
+          text: t('ok'),
+          onPress: () => confirmYYS(item),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
-  useEffect(() => {
-    fetchData();
-  }, [])
+  const confirmYYS = (item) => {
+    approveYYS(item.beyannameid, item.musteriid).then(response => {
+      console.log("res : " + response);
+      Toast.show({
+        type: 'success',
+        text1: t('success'),
+        text2: t('success_message'),
+      });
+
+      setTimeout(() => {
+        fetchData();
+      }, 250);
+    })
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+
+      return () => {
+        dispatch({ type: 'DECLARATION_YYS_INIT'});
+      };
+    }, [selectedAuthorizedFirm])
+  );
 
   const fetchData = () => {
-    dispatch(listDeclarationYYS(selectedAuthorizedFirm));
+    dispatch({ type: 'DECLARATION_YYS_LIST_REQUEST' });
+    let yysList = [];
+    try{
+      listDeclarationYYSRequest(selectedAuthorizedFirm).then(response => {
+        response.data.forEach(item => {
+          getByRefId(item.refid).then(response1 => {
+            getDetailById(response1.data.beyannameid).then(response2 => {
+              yysList.push(response2.data.data);
+
+              if (yysList.length === response.data.length) {
+                dispatch({ type: 'DECLARATION_YYS_LIST_SUCCESS', payload: yysList });
+              }
+            });
+          })
+        });
+
+        if (response.data.length === 0) {
+          dispatch({ type: 'DECLARATION_YYS_LIST_SUCCESS', payload: response.data });
+        }
+      })
+    }catch (err) {
+      dispatch({ type: 'DECLARATION_YYS_LIST_FAIL', payload: err.response?.data?.message || err.message });
+    }
   }
 
   return (
@@ -39,7 +94,7 @@ const PTask = () => {
           if (authorizedFirms) {
             return (
               <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-                <Text style={{ width: 115 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+                <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
                 <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
               </TouchableOpacity>
             );
@@ -66,10 +121,10 @@ const PTask = () => {
         renderItem={({ item }) => (
           <DeclarationYYS
             beyannameRefId={item.refid}
-            rejimTip={item.beyan}
+            rejimTip={item.beyan1}
             gonderici={item.gondericiad}
             alici={item.aliciad}
-            onOption={() => setShowAction(true)}
+            onApprove={() => confirmYYSApprove(item)}
             style={{
               marginBottom: 20,
             }}
@@ -77,7 +132,7 @@ const PTask = () => {
         )}
       />}
       {loading ? (
-        <ActivityIndicator size="large" style={{ margin: 20 }} />
+        <ActivityIndicator size="large" style={{ flex: 1 }} />
       ) : null
       }
     </SafeAreaView>

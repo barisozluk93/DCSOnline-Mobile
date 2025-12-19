@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Platform, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import {
   Header,
   Icon,
@@ -9,68 +9,115 @@ import {
 } from '@/components';
 import { BaseStyle, useTheme } from '@/config';
 import styles from './styles';
-import { getDeclarationPDF, listDeclarationArchieveRequest } from '@/apis/declarationApi';
-import WebView from 'react-native-webview';
+import { getDeclarationPDF } from '@/apis/declarationApi';
 import { Buffer } from "buffer";
-import * as FileSystem from "expo-file-system/legacy";
+import PDF from "react-native-pdf";
+import RNBlobUtil from 'react-native-blob-util';
+import { Dimensions } from 'react-native';
 
 const PProjectView = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const navigation = useNavigation();
   const route = useRoute();
+  const [filePath, setFilePath] = useState();
   const [item, setItem] = useState();
-  const [html, setHtml] = useState(undefined);
+  const PDF_DIR = `${RNBlobUtil.fs.dirs.DocumentDir}/pdf-cache`;
 
   useEffect(() => {
+    const loadPdf = async () => {
+      const key = `${item.beyannameid}_${item.arsivid}`;
+
+      const cached = await getCachedPdfPath(key);
+      if (cached) {
+        setFilePath(cached);
+        return;
+      }
+      else{
+        getDeclarationPDF(item.beyannameid, item.arsivid).then(async (response) => {
+          const base64Pdf = Buffer.from(response).toString("base64");
+          const newFilePath = await savePdfToCache(key, base64Pdf);
+          setFilePath(newFilePath);
+        })
+      }
+    }
     if (item) {
-      console.log(item)
-      getDeclarationPDF(item.beyannameid, item.arsivid).then(response => {
-        const base64Pdf = Buffer.from(response, "binary").toString("base64");
-        setHtml(`
-    <html>
-      <body style="margin:0;padding:0;">
-        <embed
-          type="application/pdf"
-          src="data:application/pdf;base64,${base64Pdf}"
-          width="100%"
-          height="100%"
-        />
-      </body>
-    </html>
-  `);
-      })
+      loadPdf();
     }
   }, [item])
 
-useEffect(() => {
-  if (route?.params?.item) {
-    setItem(route?.params?.item);
+  const ensureDir = async () => {
+    const exists = await RNBlobUtil.fs.exists(PDF_DIR);
+    if (!exists) {
+      RNBlobUtil.fs.mkdir(PDF_DIR);
+    }
   }
-}, [route?.params?.item]);
 
-if (item) {
-  return (
-    <SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
-      <Header
-        title={item.refid}
-        renderLeft={() => {
-          return <Icon name="angle-left" size={20} color={colors.text} enableRTL={true} />;
-        }}
-        onPressLeft={() => {
-          navigation.goBack();
-        }}
-      />
+  const getCachedPdfPath = async (key) => {
+    await ensureDir();
 
-      <View
-        style={styles.container}>
+    const path = `${PDF_DIR}/${key}.pdf`;
+    const exists = await RNBlobUtil.fs.exists(path);
 
-        {!html && <ActivityIndicator />}
-        {html && <WebView source={{ html }} style={{ flex: 1 }} />}
-      </View>
-    </SafeAreaView >
-  );
-}
+    return exists ? `file://${path}` : null;
+  }
+
+  const savePdfToCache = async (key, base64) => {
+    await ensureDir();
+
+    const path = `${PDF_DIR}/${key}.pdf`;
+    await RNBlobUtil.fs.writeFile(path, base64, 'base64');
+
+    return `file://${path}`;
+  }
+
+  useEffect(() => {
+    if (route?.params?.item) {
+      setItem(route?.params?.item);
+    }
+  }, [route?.params?.item]);
+
+  if (item) {
+    return (
+      <SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
+        <Header
+          title={item.refid}
+          renderLeft={() => {
+            return <Icon name="angle-left" size={20} color={colors.text} enableRTL={true} />;
+          }}
+          onPressLeft={() => {
+            navigation.goBack();
+          }}
+        />
+
+        {!filePath && <ActivityIndicator size="large" style={{ flex: 1 }} />}
+
+        {filePath && <View
+          style={styles.container}>
+          <PDF
+            source={{ uri: filePath, cache: true }}
+            enablePaging={true}
+            style={{
+              flex: 1,
+              backgroundColor: colors.background,
+              width: Dimensions.get('window').width
+            }}
+            // onPageChanged={setPage}
+            onLoadComplete={(numberOfPages) => {
+              console.log(`Number of pages: ${numberOfPages}`);
+            }}
+            onError={(error) => {
+              console.log(" err : " + error);
+            }}
+            onPressLink={(uri) => {
+              console.log(`Link pressed: ${uri}`);
+            }}
+          />
+
+        </View>}
+      </SafeAreaView >
+    );
+  }
 };
 
 export default PProjectView;

@@ -10,6 +10,10 @@
       "backgroundColor": "#ffffff",
       "color": "#000000"
     },
+    "plugins": [
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf"
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -18,17 +22,33 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.huynh.maziReactNative"
+      "bundleIdentifier": "com.dcs-online",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.huynh.maziReactNative",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "ce0b042f-a570-49ee-8aaa-3cbae06bd83f"
+      }
+    },
+    "owner": "barisozluk"
   }
 }

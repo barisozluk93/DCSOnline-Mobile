@@ -15,42 +15,82 @@ const DeclarationYYS = ({
   rejimTip,
   gonderici,
   alici,
-  onOption,
+  onApprove,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { statusName, statusColor } = useMemo(() => {
+  const { rejim, rejimColor } = useMemo(() => {
     switch (rejimTip) {
       case 'EX':
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.blueColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.blueColor,
         };
       case 'IM':
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.pinkDarkColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.pinkDarkColor,
         };
       case 'TR':
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.greenColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.greenColor,
         };
       case 'AN':
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.orangeColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.orangeColor,
         };
       case 'DI':
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.yellowColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'DG':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'DI':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'DP':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'MI':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'OB':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'SB':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.yellowColor,
+        };
+      case 'TE':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.blueColor,
+        };
+      case 'UZ':
+        return {
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.pinkDarkColor,
         };
       default:
         return {
-          statusName: t(rejimTip),
-          statusColor: BaseColor.greenColor,
+          rejim: t(rejimTip),
+          rejimColor: BaseColor.greenColor,
         };
     }
   }, [rejimTip]);
@@ -65,31 +105,28 @@ const DeclarationYYS = ({
             </Text>
           </TouchableOpacity>
           <View
-          style={{
-            flexDirection: 'row',
-            paddingTop: 5,
-            paddingBottom: 5,
-          }}
-        >
-          <Tag
-            light
-            textStyle={{
-              color: BaseColor.whiteColor,
-            }}
             style={{
-              backgroundColor: statusColor,
-              paddingHorizontal: 10,
-              minWidth: 80,
+              paddingTop: 5,
+              paddingBottom: 5,
             }}
           >
-            {statusName}
-          </Tag>
-        </View>
-          <View style={{ alignItems: 'flex-end', paddingLeft: 5 }}>
-            <TouchableOpacity hitSlop={{ top: 10, right: 10, left: 10 }} style={{ paddingLeft: 16 }} onPress={onOption}>
-              <Icon name="ellipsis-h" size={14} color={colors.text} />
-            </TouchableOpacity>
+            <Tag
+              light
+              textStyle={{
+                color: BaseColor.whiteColor,
+              }}
+              style={{
+                backgroundColor: rejimColor,
+                paddingHorizontal: 10,
+                minWidth: 80,
+              }}
+            >
+              {rejim}
+            </Tag>
           </View>
+            <TouchableOpacity hitSlop={{ top: 10, right: 10, left: 10 }} style={{ paddingLeft: 16 }} onPress={onApprove}>
+              <Icon name="check-circle" size={30} solid color={BaseColor.yellowColor} />
+            </TouchableOpacity>
         </View>
         <Text
           caption2
@@ -130,7 +167,7 @@ DeclarationYYS.propTypes = {
   description: PropTypes.string,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   completedTickets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onOption: PropTypes.func,
+  onApprove: PropTypes.func,
 };
 
 export default DeclarationYYS;

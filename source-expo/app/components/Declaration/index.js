@@ -118,6 +118,14 @@ const Declaration = ({
     }
   }, [status]);
 
+  const formatDate = (date) => {
+    return date.toLocaleDateString('tr-TR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
+
   return (
     <View style={[styles.contain, style]}>
       <View style={{ flex: 1 }}>
@@ -204,7 +212,7 @@ const Declaration = ({
               color: BaseColor.kashmir,
             }}
           >
-            {registrationDate}
+            {formatDate(new Date(registrationDate))}
           </Text>
           }
 

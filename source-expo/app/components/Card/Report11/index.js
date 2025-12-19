@@ -30,11 +30,11 @@ const CardReport11 = ({
             justifyContent: 'space-between',
           }}
         >
-          <Text caption2 style={{ marginBottom: 5 }}>
+          <Text caption2 style={{ }}>
             {name.length > 20 && name.substring(0,30) + '...'}
             {name.length <= 20 && name}
           </Text>
-          <Text headline style={[styles.text, { marginBottom: 5 }]}>
+          <Text headline style={[styles.text, {  }]}>
             {numberOfDec}
           </Text>
         </View>

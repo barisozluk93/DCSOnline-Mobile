@@ -62,6 +62,9 @@ api.interceptors.response.use(
         if (!refreshToken) {
           throw new Error("No refresh token");
         }
+        else{
+           console.log("Refresh Token var!");
+        }
 
         // Refresh isteği
         const authResponse = await refreshTokenRequest(refreshToken);

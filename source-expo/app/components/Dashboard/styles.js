@@ -1,5 +1,4 @@
 import { StyleSheet, Platform } from 'react-native';
-import * as Utils from '@/utils';
 
 export default StyleSheet.create({
   content: {
@@ -7,9 +6,6 @@ export default StyleSheet.create({
     borderRadius: 8,
     borderWidth: StyleSheet.hairlineWidth,
     ...Platform.select({
-      android: {
-        elevation: 1,
-      },
       default: {
         shadowColor: 'rgba(0,0,0, .2)',
         shadowOffset: { height: 0, width: 0 },
@@ -27,7 +23,6 @@ export default StyleSheet.create({
   viewLeft: { flex: 1, height: '100%' },
   viewRight: {
     alignItems: 'flex-end',
-    marginTop: 10,
   },
   viewFooter: {
     
@@ -42,5 +37,5 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: 8,
-},
+  },
 });

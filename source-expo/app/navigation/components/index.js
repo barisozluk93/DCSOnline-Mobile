@@ -13,7 +13,7 @@ export const tabBarIconHaveNoty = ({ color, name }) => {
   return (
   <View>
     {tabBarIcon({ color, name })}
-    {declarations.length > 0 && <View
+    {declarations && declarations.length > 0 && <View
       style={{
         borderWidth: 1,
         borderColor: BaseColor.whiteColor,

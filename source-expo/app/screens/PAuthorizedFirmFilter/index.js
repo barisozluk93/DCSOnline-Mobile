@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ScrollView, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { BaseColor, BaseStyle, useTheme } from '@/config';
 import {
   Button,
@@ -20,9 +20,9 @@ const PAuthorizedFirmFilter = (props) => {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
-  const [ authorizedFirmList, setAuthorizedFirmList ] = useState(authorizedFirms);
-  const [ selectedItem, setSelectedItem ] = useState(selectedAuthorizedFirm);
-  const [ searchText, setSearchText ] = useState('');
+  const [authorizedFirmList, setAuthorizedFirmList] = useState(authorizedFirms);
+  const [selectedItem, setSelectedItem] = useState(selectedAuthorizedFirm);
+  const [searchText, setSearchText] = useState('');
 
   const onItemSelected = (item) => {
     setSelectedItem(item.musteriid);
@@ -30,11 +30,29 @@ const PAuthorizedFirmFilter = (props) => {
 
   const filterFirm = (text) => {
     setSearchText(text)
-      if (text) {
-        setAuthorizedFirmList(authorizedFirmList.filter((item) => item.name.toLowerCase().includes(text.toLowerCase())));
-      } else {
-        setAuthorizedFirmList(authorizedFirms);
-      }
+    if (text) {
+      setAuthorizedFirmList(authorizedFirms.filter((item) => item.name.toLocaleLowerCase("tr-TR").includes(text.toLocaleLowerCase("tr-TR"))));
+    } else {
+      setAuthorizedFirmList(authorizedFirms);
+    }
+  };
+
+  const confirmFirmChange = () => {
+    Alert.alert(
+      "",
+      t('sure'),
+      [
+        { text: t('cancel'), style: 'cancel' },
+        {
+          text: t('ok'),
+          onPress: () => {
+            dispatch({ type: 'SET_SELECTED_AUTH_FIRM', payload: selectedItem });
+            navigation.goBack();
+          }
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
@@ -49,18 +67,18 @@ const PAuthorizedFirmFilter = (props) => {
 
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <TextInput
-              value={searchText}
-              onChangeText={filterFirm}
-              placeholder={t('search_firm')}
-              iconLeft={<Icon name="search" color={colors.border} style={{ marginRight: 8 }} size={18} />}
-              icon={
-                searchText ? (
-                  <TouchableOpacity onPress={() => { setSelectedItem(''); filterFirm(''); }}>
-                    <Icon name="times" size={16} color={BaseColor.grayColor} />
-                  </TouchableOpacity>
-                ) : null
-              }
-            />
+          value={searchText}
+          onChangeText={filterFirm}
+          placeholder={t('search_firm')}
+          iconLeft={<Icon name="search" color={colors.border} style={{ marginRight: 8 }} size={18} />}
+          icon={
+            searchText ? (
+              <TouchableOpacity onPress={() => { filterFirm(''); }}>
+                <Icon name="times" size={16} color={BaseColor.grayColor} />
+              </TouchableOpacity>
+            ) : null
+          }
+        />
       </View>
       {authorizedFirmList.length === 0 && <NotFound />}
 
@@ -71,19 +89,17 @@ const PAuthorizedFirmFilter = (props) => {
         <View>
           {authorizedFirmList.map((item, index) => (
             <View style={[styles.contain]}>
-              <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'column' }}>
+              <View key={item.musteriid} style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => onItemSelected(item)} style={{
                     flexDirection: 'row',
-                  }} key={`${index}`}>
+                  }}>
                     {(item.musteriid === selectedItem) && <Icon name="check" size={14} color={colors.primary} />}
                     <View>
                       <Text body2 style={{ color: (item.musteriid === selectedItem) ? colors.primary : colors.text }}>
-                       {item.name}
+                        {item.name}
                       </Text>
                     </View>
                   </TouchableOpacity>
-                </View>
                 <View
                   style={[
                     styles.footer,
@@ -102,10 +118,9 @@ const PAuthorizedFirmFilter = (props) => {
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
         <Button
           full
-          onPress={() => {
-            dispatch({ type: 'SET_SELECTED_AUTH_FIRM', payload: selectedItem });
-            navigation.goBack();
-          }}
+          onPress={
+            confirmFirmChange
+          }
         >
           {t('apply')}
         </Button>
