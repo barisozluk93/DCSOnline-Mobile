@@ -14,6 +14,7 @@ import { Buffer } from "buffer";
 import PDF from "react-native-pdf";
 import RNBlobUtil from 'react-native-blob-util';
 import { Dimensions } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 const PProjectView = () => {
   const { t } = useTranslation();
@@ -33,12 +34,25 @@ const PProjectView = () => {
         setFilePath(cached);
         return;
       }
-      else{
+      else {
         getDeclarationPDF(item.beyannameid, item.arsivid).then(async (response) => {
           const base64Pdf = Buffer.from(response).toString("base64");
+          console.log(base64Pdf)
           const newFilePath = await savePdfToCache(key, base64Pdf);
+          console.log(newFilePath)
           setFilePath(newFilePath);
         })
+          .catch((error) => {
+            Toast.show({
+              type: 'error',
+              text1: t('error'),
+              text2: t('error_file_message'),
+            });
+
+            setTimeout(() => {
+              navigation.goBack();
+            }, 250);
+          });
       }
     }
     if (item) {

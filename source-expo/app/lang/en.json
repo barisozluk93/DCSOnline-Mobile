@@ -301,6 +301,7 @@
   "success_message": "Transaction successfuly completed.",
   "error": "Error!",
   "error_login_message": "Invalid username or password.",
+  "error_file_message": "An error has occured.",
   "sure": "Are you sure to perform this transaction?",
   "pending": "Pending",
   "todo": "Everything",

@@ -301,6 +301,7 @@
   "success_message": "İşlem başarı ile gerçekleştirildi.",
   "error": "Hata!",
   "error_login_message": "Geçersiz kullanıcı adı veya şifre.",
+  "error_file_message": "Bir hata oluştu.",
   "sure": "Bu işlemi gerçekleştirmek istediğinize emin misiniz?",
   "pending": "Pending",
   "todo": "Everything",

@@ -142,7 +142,6 @@ const Navigator = () => {
         </RootStack.Navigator>
       </NavigationContainer>
       <Toast config={toastConfig} />
-      {!loading && <AssistiveTouch goToApp={goToApp} />}
     </View>
   );
 };
