@@ -105,24 +105,8 @@ const Profile = (props) => {
                   />
                 </TouchableOpacity>
               )}
-              <TouchableOpacity
-                style={styleItem}
-                onPress={() => {
-                  navigation.navigate('ContactUs');
-                }}
-              >
-                <Text body1>{t('contact_us')}</Text>
-                <Icon name="angle-right" size={18} color={colors.primary} style={{ marginLeft: 5 }} enableRTL={true} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styleItem}
-                onPress={() => {
-                  navigation.navigate('AboutUs');
-                }}
-              >
-                <Text body1>{t('about_us')}</Text>
-                <Icon name="angle-right" size={18} color={colors.primary} style={{ marginLeft: 5 }} enableRTL={true} />
-              </TouchableOpacity>
+              
+              
             </View>
           </ScrollView>
         </View>
