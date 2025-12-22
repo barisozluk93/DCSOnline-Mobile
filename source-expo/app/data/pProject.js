@@ -185,38 +185,4 @@ export const PProject = [
   },
 ];
 
-export const PProjectType = [
-  {
-    value: 'agile',
-    iconName: 'font',
-    text: 'Agile',
-  },
-  {
-    value: 'scrum',
-    iconName: 'stripe-s',
-    text: 'Scrum',
-  },
-  {
-    value: 'kanban',
-    iconName: 'kickstarter-k',
-    text: 'Kanban',
-  },
-  {
-    value: 'CCPM',
-    iconName: 'cuttlefish',
-    text: 'CCPM',
-  },
-];
-
-export const PProjectAction = [
-  {
-    value: 'project_settings',
-    text: 'Project settings',
-  },
-  {
-    value: 'move_to_trash',
-    text: 'Move to trash',
-  },
-];
-
 

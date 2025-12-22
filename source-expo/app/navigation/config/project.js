@@ -2,10 +2,7 @@
 import PHome from '@/screens/PHome';
 import PProject from '@/screens/PProject';
 import PProjectView from '@/screens/PProjectView';
-import PProjectCreate from '@/screens/PProjectCreate';
-import PTaskView from '@/screens/PTaskView';
 import PTask from '@/screens/PTask';
-import PFilter from '@/screens/PFilter';
 import PAuthorizedFirmFilter from '@/screens/PAuthorizedFirmFilter';
 import PDeclarationFilter from '@/screens/PDeclarationFilter';
 import Profile from '@/screens/Profile';
@@ -59,18 +56,6 @@ export default {
       title: 'project_view',
     },
   },
-  PProjectCreate: {
-    component: PProjectCreate,
-    options: {
-      title: 'create_project',
-    },
-  },
-  PFilter: {
-    component: PFilter,
-    options: {
-      title: 'filter',
-    },
-  },
   PAuthorizedFirmFilter: {
     component: PAuthorizedFirmFilter,
     options: {
@@ -81,12 +66,6 @@ export default {
     component: PDeclarationFilter,
     options: {
       title: 'filter',
-    },
-  },
-  PTaskView: {
-    component: PTaskView,
-    options: {
-      title: 'task_view',
     },
   },
 };
