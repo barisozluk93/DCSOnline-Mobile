@@ -72,23 +72,4 @@ const EPostListData = [
   },
 ];
 
-const ESortOption = [
-  {
-    value: 'all',
-    text: 'all',
-  },
-  {
-    value: 'best_match',
-    text: 'best_match',
-  },
-  {
-    value: 'price_low_to_high',
-    text: 'price_low_to_high',
-  },
-  {
-    value: 'price_high_to_low',
-    text: 'price_high_to_low',
-  },
-];
-
-export { EPostListData, ESortOption };
+export { EPostListData };

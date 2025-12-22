@@ -3,7 +3,6 @@ import { Pressable, StyleSheet } from 'react-native';
 import MHome from '@/screens/MHome';
 import MSearch from '@/screens/MSearch';
 import MPodCast from '@/screens/MPodCast';
-import MLibrary from '@/screens/MLibrary';
 import MPlay from '@/screens/MPlay';
 import MLikedSongs from '@/screens/MLikedSongs';
 import MAlbum from '@/screens/MAlbum';
@@ -71,13 +70,6 @@ export const MusicTabScreens = {
     options: {
       title: 'podcast',
       tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'headphones' }),
-    },
-  },
-  MLibrary: {
-    component: MLibrary,
-    options: {
-      title: 'library',
-      tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'book' }),
     },
   },
 };

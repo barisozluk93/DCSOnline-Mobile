@@ -10,7 +10,6 @@ import NSearchHistory from '@/screens/NSearchHistory';
 import NHome from '@/screens/NHome';
 import NPost from '@/screens/NPost';
 import Profile from '@/screens/Profile';
-import NCategory from '@/screens/NCategory';
 import NFavourite from '@/screens/NFavourite';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
 
@@ -20,13 +19,6 @@ export const NewsTabScreens = {
     options: {
       title: 'home',
       tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'home' }),
-    },
-  },
-  NCategory: {
-    component: NCategory,
-    options: {
-      title: 'category',
-      tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
     },
   },
   NPost: {

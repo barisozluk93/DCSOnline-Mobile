@@ -5,7 +5,7 @@ const initialState = {
   font: null,
   force_dark: null,
   language: null,
-  menu: 'eCommerce',
+  menu: 'project',
   intro: true,
 };
 

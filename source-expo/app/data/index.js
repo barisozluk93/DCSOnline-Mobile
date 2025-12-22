@@ -10,19 +10,9 @@ export { HomePopularData } from './homepopulars';
 export { HomeChannelData } from './homechannel';
 export { PostListData, FPostListData, EPostProductData } from './post';
 export { RecentListData } from './recentView';
-export { EPostListData, ESortOption } from './ePost';
-export { ProductsData } from './eCart';
-export { CompletedOrders } from './eMyOrder';
-export { OrderDetail } from './eTrackOrder';
-export { WishlistsData, EOptions } from './eWishlist';
-export { ENotificationData } from './eNotification';
-export { EAddressData } from './eAddress';
-export { EPaymentItemsData } from './eSettingPayment';
-export { ECategories, EFeaturedShop, EPopulars, EYourStores, EWishlistHome } from './eHome';
-export { ECategoryData } from './eCategory';
-export { EFilterColors, EFilterCategories, EFilterSizes } from './eFilter';
-export { EProductOfStore } from './eProductStoreProfile';
-export { EFollowers } from './eFollowers';
+export { EPostListData } from './ePost';
+export { EYourStores } from './eHome';
+export { EFilterColors } from './eFilter';
 export { EReviewsData } from './eReviews';
 export {
   FCategories,

@@ -1,5 +1,4 @@
 import {
-  ECommerceScreens,
   FinanceScreens,
   FryptoScreens,
   ModalScreens,
@@ -42,15 +41,6 @@ export const MaziListApp = [
     screens: FryptoScreens,
     icon: 'bitcoin',
     backgroundColor: parseHexTransparency(BaseColor.pinkColor, 75),
-  },
-  {
-    id: 'ECommerceMenu',
-    title: 'ecommerce_app',
-    image: Images.dashboardEcomercial,
-    subtitle: `${Object.keys(ECommerceScreens).length}+ UI KITs`,
-    screens: ECommerceScreens,
-    icon: 'shopping-cart',
-    backgroundColor: parseHexTransparency(BaseColor.blueColor, 75),
   },
   {
     id: 'NewsMenu',
