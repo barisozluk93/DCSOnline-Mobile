@@ -1,4 +1,3 @@
-import AboutUs from '@/screens/AboutUs';
 import ChangeLanguage from '@/screens/ChangeLanguage';
 import ChangePassword from '@/screens/ChangePassword';
 import ContactUs from '@/screens/ContactUs';
@@ -34,12 +33,6 @@ export default {
     component: MaziHome,
     options: {
       title: 'mazi_home',
-    },
-  },
-  AboutUs: {
-    component: AboutUs,
-    options: {
-      title: 'about_us',
     },
   },
   ChangeLanguage: {

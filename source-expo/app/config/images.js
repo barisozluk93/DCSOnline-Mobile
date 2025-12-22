@@ -54,7 +54,6 @@ export const Images = {
   channel4: require('@/assets/images/channel-4.png'),
   arrowLeft: require('@/assets/images/arrow-left.png'),
   bookmark: require('@/assets/images/bookmark.png'),
-  aboutUS: require('@/assets/images/about-us.jpg'),
   categoryEntertainment: require('@/assets/images/category-entertainment.jpg'),
   categoryFood: require('@/assets/images/category-food.jpg'),
   categoryHealth: require('@/assets/images/category-health.jpg'),
