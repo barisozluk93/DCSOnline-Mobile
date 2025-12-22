@@ -4,7 +4,6 @@ export { MessagesData } from './messages';
 export { NotificationData } from './notification';
 export { ReviewData } from './review';
 export { CategoryData } from '././category';
-export { AboutUsData } from './aboutUs';
 export { FavouriteData } from './favourite';
 export { HomeTopicData } from './hometopic';
 export { HomeListData } from './homelist';
