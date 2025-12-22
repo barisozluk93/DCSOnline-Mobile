@@ -3,7 +3,6 @@ export { UserData } from './user';
 export { MessagesData } from './messages';
 export { NotificationData } from './notification';
 export { ReviewData } from './review';
-export { FavouriteData } from './favourite';
 export { HomeTopicData } from './hometopic';
 export { HomeListData } from './homelist';
 export { HomePopularData } from './homepopulars';
@@ -14,24 +13,7 @@ export { EPostListData } from './ePost';
 export { EYourStores } from './eHome';
 export { EFilterColors } from './eFilter';
 export { EReviewsData } from './eReviews';
-export {
-  FCategories,
-  FRecentTransactions,
-  FActivites,
-  FHotNews,
-  FNews,
-  FChartItems,
-  FTransactions,
-  FHotNews2,
-} from './fHome';
-export { FLinks, FTransactionsTab } from './fCryptol';
-export { FBuyList, FSellList, FTransfer, FTypes, FChooseCategories, FMarkers, FCurrencies } from './fAddTransaction';
-export { FFriends } from './fFriend';
-export { FPaymentItemsData } from './fBank';
-export { FHistory } from './fHistory';
-export { FPayment, FPeriod } from './fActivityFilter';
-export { FNotificationData } from './fNotification';
-export { FCategoryData } from './fCategory';
+export { FCurrencies } from './fAddTransaction';
 export { PProjectHome } from './pHome';
 export { PProject, PProjectType, PProjectAction } from './pProject';
 export { PTeamMembersInCreate, PAttachments } from './pProjectCreate';

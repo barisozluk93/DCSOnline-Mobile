@@ -3,14 +3,12 @@ import PHome from '@/screens/PHome';
 import PProject from '@/screens/PProject';
 import PProjectView from '@/screens/PProjectView';
 import PProjectCreate from '@/screens/PProjectCreate';
-import PTaskCreate from '@/screens/PTaskCreate';
 import PTaskView from '@/screens/PTaskView';
 import PTask from '@/screens/PTask';
 import PFilter from '@/screens/PFilter';
 import PAuthorizedFirmFilter from '@/screens/PAuthorizedFirmFilter';
 import PDeclarationFilter from '@/screens/PDeclarationFilter';
 import Profile from '@/screens/Profile';
-import PSelectAssignee from '@/screens/PSelectAssignee';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
 
 export const NewsTabScreens = {
@@ -55,12 +53,6 @@ export default {
       title: 'home',
     },
   },
-  PSelectAssignee: {
-    component: PSelectAssignee,
-    options: {
-      title: 'select_assignee',
-    },
-  },
   PProjectView: {
     component: PProjectView,
     options: {
@@ -71,12 +63,6 @@ export default {
     component: PProjectCreate,
     options: {
       title: 'create_project',
-    },
-  },
-  PTaskCreate: {
-    component: PTaskCreate,
-    options: {
-      title: 'create_task',
     },
   },
   PFilter: {

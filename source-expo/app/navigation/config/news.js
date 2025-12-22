@@ -10,7 +10,6 @@ import NSearchHistory from '@/screens/NSearchHistory';
 import NHome from '@/screens/NHome';
 import NPost from '@/screens/NPost';
 import Profile from '@/screens/Profile';
-import NFavourite from '@/screens/NFavourite';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
 
 export const NewsTabScreens = {
@@ -26,13 +25,6 @@ export const NewsTabScreens = {
     options: {
       title: 'posts',
       tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'file' }),
-    },
-  },
-  NFavourite: {
-    component: NFavourite,
-    options: {
-      title: 'favorites',
-      tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'bookmark' }),
     },
   },
   Profile: {

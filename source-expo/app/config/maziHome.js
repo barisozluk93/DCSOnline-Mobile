@@ -1,6 +1,4 @@
 import {
-  FinanceScreens,
-  FryptoScreens,
   ModalScreens,
   NewsScreens,
   ShareScreens,
@@ -13,35 +11,6 @@ import { Images, BaseColor } from '@/config';
 const CommonScreens = { ...ShareScreens, ...ModalScreens };
 
 export const MaziListApp = [
-  {
-    id: 'MaziHome',
-    title: 'home',
-    image: '',
-    subtitle: '',
-    screens: FinanceScreens,
-    icon: 'home',
-    isHideInHome: true,
-    isHideInScreens: true,
-    backgroundColor: parseHexTransparency(BaseColor.pinkLightColor, 75),
-  },
-  {
-    id: 'WalletMenu',
-    title: 'wallet_app',
-    image: Images.dashboardWallet,
-    subtitle: `${Object.keys(FinanceScreens).length}+ UI KITs`,
-    screens: FinanceScreens,
-    icon: 'wallet',
-    backgroundColor: parseHexTransparency(BaseColor.orangeColor, 75),
-  },
-  {
-    id: 'CryptoMenu',
-    title: 'crypto_app',
-    image: Images.dashboardCrypto,
-    subtitle: `${Object.keys(FryptoScreens).length}+ UI KITs`,
-    screens: FryptoScreens,
-    icon: 'bitcoin',
-    backgroundColor: parseHexTransparency(BaseColor.pinkColor, 75),
-  },
   {
     id: 'NewsMenu',
     title: 'news_app',
