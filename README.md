@@ -1,10 +1,3 @@
-# Information
-- [Document](https://passionui.com/docs/mazi)
-- [Facebook](https://www.facebook.com/passionui)
-- [Support](https://passionui.com/support)
-- [License](https://passionui.com/license)
-- [Youtube](https://www.youtube.com/channel/UCt_7rXE3zgj_a_UbGCFUz6Q)
-
 # License
 ### When you purchase Regular License ?
 Use, by you or one client, in a single end product which end users are not charged for

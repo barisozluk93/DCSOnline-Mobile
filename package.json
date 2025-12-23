@@ -1,6 +1,6 @@
 {
   "name": "dcs-online",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "DCS Online Mobile App",
   "directories": {
     "doc": "docs"
@@ -11,14 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/passionui/react-mazi.git"
+    "url": "https://github.com/barisozluk93/DCSOnline-Mobile.git"
   },
-  "author": "thaivannguyen.it@gmail.com",
+  "author": "barisozluk93@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://bitbucket.org/passionui/react-mazi/issues"
+    "url": "https://github.com/barisozluk93/DCSOnline-Mobile/issues"
   },
-  "homepage": "https://bitbucket.org/passionui/react-mazi#readme",
   "devDependencies": {
     "husky": "^7.0.0",
     "lint-staged": "^13.0.3"
