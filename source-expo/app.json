@@ -3,13 +3,7 @@
     "name": "DCS Online",
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/dcs.jpg",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff",
-      "color": "#000000"
-    },
+    "icon": "./assets/logo.png",
     "plugins": [
       "@config-plugins/react-native-blob-util",
       "@config-plugins/react-native-pdf"
@@ -21,6 +15,7 @@
       "**/*"
     ],
     "ios": {
+      "icon": "./assets/logo.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.klcsoft.dcsonline",
       "infoPlist": {
@@ -29,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.klcsoft.dcsonline",
