@@ -2,10 +2,12 @@
   "build": {
     "production": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",        
+        "autoIncrement": true
       },
       "ios": {
-        "simulator": false
+        "simulator": false,
+        "autoIncrement": true
       }
     }
   }
