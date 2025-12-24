@@ -390,5 +390,17 @@
   "mazi_components": "Mazi components",
   "mazi_components_description": "This is all component used in application",
   "mazi_setting": "Mazi Setting",
-  "mazi_setting_description": "You can setting about font style, themes, language and more ..."
+  "mazi_setting_description": "You can setting about font style, themes, language and more ...",
+  "last_five_years": "Last 5 Years",
+  "total_number_of_decs": "Total Number Of Declarations",
+  "total_invoice_amount": "Total Invoice Amount",
+  "total_value": "Total Value",
+  "total_tax": "Total Tax",
+  "by_month": "By Months",
+  "by_dec_type": "By Declaration Type",
+  "by_suppliers": "By Suppliers",
+  "by_transportation_type": "By Transportation Type",
+  "total_number_of_items": "Total Number of Items",
+  "total_number_of_packages": "Total Number of Packages"
+
 }

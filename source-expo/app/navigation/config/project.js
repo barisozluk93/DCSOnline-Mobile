@@ -7,6 +7,7 @@ import PAuthorizedFirmFilter from '@/screens/PAuthorizedFirmFilter';
 import PDeclarationFilter from '@/screens/PDeclarationFilter';
 import Profile from '@/screens/Profile';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
+import MNotification from '@/screens/MNotification';
 
 export const NewsTabScreens = {
 
@@ -48,6 +49,12 @@ export default {
     component: ProjectMenu,
     options: {
       title: 'home',
+    },
+  },
+  MNotification: {
+    component: MNotification,
+    options: {
+      title: 'music_notification',
     },
   },
   PProjectView: {

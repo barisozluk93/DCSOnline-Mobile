@@ -20,9 +20,9 @@ const PHome = (props) => {
         [
           {
             chartType: 'card',
-            title: 'Toplam Beyanname',
+            title: t('total_number_of_decs'),
             description: '1.135',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "file-invoice",
             style: {
@@ -34,9 +34,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Fatura Tutarı',
+            title: t('total_invoice_amount'),
             description: '₺4.301M',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "receipt",
             style: {
@@ -47,9 +47,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Kıymet',
+            title: t('total_value'),
             description: '$121M',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "dollar-sign",
             style: {
@@ -62,9 +62,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Toplam Vergi',
+            title: t('total_tax'),
             description: '₺980M',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "lira-sign",
             style: {
@@ -75,10 +75,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'bar',
-            title: 'Fatura Tutarı',
+            title: t('total_invoice_amount'),
             description: '',
             footer: '',
-            byParameter: 'Aylara Göre - 2025',
+            byParameter: t('by_month') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -111,10 +111,10 @@ const PHome = (props) => {
         [
           {
             chartType: 'pie',
-            title: 'Toplam Beyanname',
+            title: t('total_number_of_decs'),
             description: '',
             footer: '',
-            byParameter: 'Beyan Tipine Göre - 2025',
+            byParameter: t('by_dec_type') + ' - ' +  new Date().getFullYear(),
             data: [
               {
                 name: 'EX',
@@ -155,10 +155,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'pie',
-            title: 'Toplam Beyanname',
+            title: t('total_number_of_decs'),
             description: '',
             footer: '',
-            byParameter: 'Taşıma Şekline Göre - 2025',
+            byParameter: t('by_transportation_type') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 name: 'DENİZ',
@@ -186,10 +186,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'progress',
-            title: 'Toplam Beyanname (Top 5)',
+            title: t('total_number_of_decs') + ' (Top 5)',
             description: '',
             footer: '',
-            byParameter: 'Tedarikçilere Göre - 2025',
+            byParameter: t('by_suppliers') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 id: 1,
@@ -235,9 +235,9 @@ const PHome = (props) => {
         [
           {
             chartType: 'card',
-            title: 'Toplam Kalem',
+            title: t('total_number_of_items'),
             description: '15.652',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "pencil-ruler",
             style: {
@@ -249,9 +249,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Fatura Tutarı',
+            title: t('total_invoice_amount'),
             description: '₺17.252M',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "receipt",
             style: {
@@ -262,9 +262,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Kıymet',
+            title: t('total_value'),
             description: '$451M',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "dollar-sign",
             style: {
@@ -277,9 +277,9 @@ const PHome = (props) => {
           },
           {
             chartType: 'card',
-            title: 'Toplam Kap',
+            title:  t('total_number_of_packages'),
             description: '21.462.196',
-            footer: 'Son 5 yıllık',
+            footer: t('last_five_years'),
             byParameter: '',
             icon: "box",
             style: {
@@ -290,10 +290,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'bar',
-            title: 'Toplam Fatura',
+            title: t('total_invoice_amount'),
             description: '',
             footer: '',
-            byParameter: 'Aylara Göre - 2025',
+            byParameter: t('by_month') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
@@ -326,10 +326,10 @@ const PHome = (props) => {
         [
           {
             chartType: 'pie',
-            title: 'Toplam Kalem',
+            title: t('total_number_of_items'),
             description: '',
             footer: '',
-            byParameter: 'Beyan Tipine Göre - 2025',
+            byParameter: t('by_dec_type') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 name: 'EX',
@@ -371,10 +371,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'pie',
-            title: 'Toplam Kalem',
+            title: t('total_number_of_items'),
             description: '',
             footer: '',
-            byParameter: 'Taşıma Şekline Göre - 2025',
+            byParameter: t('by_transportation_type') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 name: 'DENİZ',
@@ -402,10 +402,10 @@ const PHome = (props) => {
           },
           {
             chartType: 'progress',
-            title: 'Toplam Kalem (Top 5)',
+            title: t('total_number_of_items') + " (Top 5)",
             description: '',
             footer: '',
-            byParameter: 'Tedarikçilere Göre - 2025',
+            byParameter: t('by_suppliers') + ' - ' + new Date().getFullYear(),
             data: [
               {
                 id: 1,

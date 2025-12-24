@@ -1,4 +1,4 @@
-package com.huynh.maziReactNative
+package com.klcsoft.dcsonline
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

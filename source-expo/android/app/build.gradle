@@ -99,9 +99,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.huynh.maziReactNative'
+    namespace 'com.klcsoft.dcsonline'
     defaultConfig {
-        applicationId 'com.huynh.maziReactNative'
+        applicationId 'com.klcsoft.dcsonline'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

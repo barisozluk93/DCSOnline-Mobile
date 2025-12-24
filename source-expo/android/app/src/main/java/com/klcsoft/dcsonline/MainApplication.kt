@@ -1,4 +1,4 @@
-package com.huynh.maziReactNative
+package com.klcsoft.dcsonline
 
 import android.app.Application
 import android.content.res.Configuration

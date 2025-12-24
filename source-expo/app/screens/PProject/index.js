@@ -29,7 +29,7 @@ const PProject = () => {
       fetchData();
 
       return () => {
-        dispatch({ type: 'DECLARATION_INIT'});
+        dispatch({ type: 'DECLARATION_INIT' });
       };
     }, [selectedAuthorizedFirm, currentPage, filters])
   );
@@ -89,37 +89,55 @@ const PProject = () => {
       />
 
       {!loading &&
-        <>
-          <View style={{ flexDirection: "row", padding: 16, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingVertical: 16,
+            paddingLeft: 8,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            borderBottomColor: colors.border,
+          }}
+        >
+          <View style={{ flex: 1, alignItems: "flex-start" }}>
             <Tag
               gray
               style={{
                 borderRadius: 3,
                 backgroundColor: BaseColor.kashmir,
-                marginHorizontal: 5,
                 paddingVertical: 3,
-                marginRight: 35
               }}
               textStyle={{
                 paddingHorizontal: 4,
+                fontSize: 15,
                 color: BaseColor.whiteColor,
               }}
-              icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={10} />}
-              onPress={() => navigation.navigate('PDeclarationFilter')}
+              icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={15} />}
+              onPress={() => navigation.navigate("PDeclarationFilter")}
             >
-              {t('filter')}
+              {t("filter")}
             </Tag>
-            
+          </View>
+          {declarations && declarations.length > 0 && <View
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <TouchableOpacity
               disabled={page === 1}
               onPress={() => setCurrentPage(page - 1)}
-              style={{ marginHorizontal: 6, opacity: page === 1 ? 0.4 : 1 }}
+              style={{marginHorizontal: 6, opacity: page === 1 ? 0.4 : 1 }}
             >
-              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>‹ {t('prev')}</Text>
+              <Text style={{paddingVertical: 2.5, borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>‹ {t('prev')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity disabled={true}>
-              <Text style={{ borderRadius: 8, width: 30, height: 25, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16 }}>
+              <Text style={{ paddingVertical: 2.5, borderRadius: 8, width: 30, height: 25, textAlign: "center", color: colors.text, backgroundColor: colors.primary, fontSize: 16 }}>
                 {page}
               </Text>
             </TouchableOpacity>
@@ -129,11 +147,12 @@ const PProject = () => {
               onPress={() => setCurrentPage(page + 1)}
               style={{ marginHorizontal: 6, opacity: page === totalPages ? 0.4 : 1 }}
             >
-              <Text style={{ borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>{t('next')}›</Text>
+              <Text style={{ paddingVertical: 2.5, borderRadius: 8, height: 25, textAlign: "center", color: colors.text, fontSize: 16 }}>{t('next')}›</Text>
             </TouchableOpacity>
-          </View>
-        </>}
-      
+          </View>}
+        </View>
+      }
+
       {!loading && declarations && declarations.length === 0 && <NotFound />}
 
       {!loading && <FlatList

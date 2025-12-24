@@ -6,6 +6,7 @@ import SignIn from '@/screens/SignIn';
 import SignUp from '@/screens/SignUp';
 import ThemeSetting from '@/screens/ThemeSetting';
 import Loading from '@/screens/Loading';
+import ProfileEdit from '@/screens/ProfileEdit';
 
 export default {
   Loading: {
@@ -25,6 +26,12 @@ export default {
     component: ChangePassword,
     options: {
       title: 'change_password',
+    },
+  },
+    ProfileEdit: {
+    component: ProfileEdit,
+    options: {
+      title: 'edit_profile',
     },
   },
   Setting: {

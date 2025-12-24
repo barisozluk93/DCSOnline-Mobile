@@ -3,7 +3,7 @@ import { Images } from '@/config';
 const UserData = [
   {
     id: '1',
-    image: Images.profile2,
+    image: Images.avata5,
     name: 'Barış Özlük',
     major: 'Travel Agency',
     email: 'lewis.victor@milford.tv',

@@ -390,5 +390,16 @@
   "mazi_components": "Mazi components",
   "mazi_components_description": "This is all component used in application",
   "mazi_setting": "Mazi Setting",
-  "mazi_setting_description": "You can setting about font style, themes, language and more ..."
+  "mazi_setting_description": "You can setting about font style, themes, language and more ...",
+  "last_five_years": "Son 5 Yıllık",
+  "total_number_of_decs": "Toplam Beyanname Sayısı",
+  "total_invoice_amount": "Toplam Fatura Tutarı",
+  "total_value": "Toplam Kıymet",
+  "total_tax": "Toplam Vergi",
+  "by_month": "Aylara Göre",
+  "by_dec_type": "Beyan Tipine Göre",
+  "by_suppliers": "Tedarikçilere Göre",
+  "by_transportation_type": "Taşıma Şekline Göre",
+  "total_number_of_items": "Toplam Kalem Sayısı",
+  "total_number_of_packages": "Toplam Kap Adedi"
 }
