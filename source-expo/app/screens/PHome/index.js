@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View, TouchableOpacity } from 'react-native';
 import { BaseStyle, useTheme, BaseColor } from '@/config';
@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux';
 
 const PHome = (props) => {
   const { navigation } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
+  const [dashboardData, setDashboardData] = useState([]);
 
   const DashboardData = [
     {
@@ -459,9 +460,18 @@ const PHome = (props) => {
   ];
   const [tab, setTab] = useState(tabs[0]);
 
-  const dashboardData = useMemo(() => {
-    return DashboardData.filter((data) => data.type === tab.id);
+  useEffect(() => {
+    setDashboardData(DashboardData.filter((data) => data.type === tab.id));
   }, [tab]);
+
+  useEffect(() => {
+    const onChange = () => {  
+      setDashboardData([]);
+      setTab(tabs[0]);
+    };
+    i18n.on('languageChanged', onChange);
+    return () => i18n.off('languageChanged', onChange);
+  }, []);
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
 
@@ -500,7 +510,7 @@ const PHome = (props) => {
           if (authorizedFirms) {
           return (
             <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-                <Text style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+              <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
               <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
             </TouchableOpacity>
           );

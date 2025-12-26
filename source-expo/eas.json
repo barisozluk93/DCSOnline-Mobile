@@ -2,7 +2,7 @@
   "build": {
     "production": {
       "android": {
-        "buildType": "apk",        
+        "buildType": "apk",
         "autoIncrement": true
       },
       "ios": {
@@ -10,5 +10,8 @@
         "autoIncrement": true
       }
     }
+  },
+  "cli": {
+    "appVersionSource": "remote"
   }
 }

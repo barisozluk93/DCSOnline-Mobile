@@ -4,6 +4,11 @@
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "plugins": [
       "@config-plugins/react-native-blob-util",
       "@config-plugins/react-native-pdf"
@@ -15,7 +20,7 @@
       "**/*"
     ],
     "ios": {
-      "icon": "./assets/logo.png",
+      "icon": "./assets/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.klcsoft.dcsonline",
       "infoPlist": {
@@ -24,7 +29,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.klcsoft.dcsonline",

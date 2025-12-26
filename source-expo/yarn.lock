@@ -6027,10 +6027,10 @@ react-native-app-intro-slider@^4.0.4:
   resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-4.0.4.tgz#fa5cda7057db62c448ac975ffd2ba0cff94cc8d8"
   integrity sha512-Zkjaol6X3BbZkHUpVDj2LjdidpS6rCgKi0fx80xgGKa0pHxBRd4swWTv2bHnnvu5k1/HXwYk0mY2TbK+2jHl5w==
 
-react-native-blob-util@^0.24.5:
-  version "0.24.5"
-  resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.24.5.tgz#7a9664ce725a593e1b5dbb430742a647a0d3bd16"
-  integrity sha512-GmhV7sJ0oC1ENLXE5mVe5eUE8JXgNNyylOmpgo6NZhkWzB0tCcV/RNNanpHw6CkAF+WdnPdnpo5G/yrSxX75fg==
+react-native-blob-util@^0.24.6:
+  version "0.24.6"
+  resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.24.6.tgz#f48a423e53315fb922e07ba08910c509a0887385"
+  integrity sha512-e4231VTT0bO1Yh9KGtY6jXq7pkLXgDTz+ziClEEbiGwWBuG92Z+wFRLptlzdVbibW8XtrO1XrdtiE8AOlplEXQ==
   dependencies:
     base-64 "0.1.0"
     glob "13.0.0"
