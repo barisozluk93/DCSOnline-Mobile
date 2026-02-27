@@ -3,7 +3,7 @@ import { loadToken } from '../utils/storage';
 
 
 const authApi = axios.create({
-  baseURL: 'https://dev-kc.singlewindow.io/auth/',
+  baseURL: 'https://login.singlewindow.io/auth/',
 });
 
 authApi.interceptors.request.use(async (config) => {

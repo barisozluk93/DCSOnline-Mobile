@@ -75,11 +75,11 @@ const Navigator = () => {
 
   useEffect(() => {
     if (!loading) {
-      removeToken();
-      dispatch({ type: "AUTH_LOGOUT" });
-      dispatch({ type: "USER_INIT" });
-      dispatch({ type: "DECLARATION_INIT" });
-      dispatch({ type: "DECLARATION_YYS_INIT" });
+      // removeToken();
+      // dispatch({ type: "AUTH_LOGOUT" });
+      // dispatch({ type: "USER_INIT" });
+      // dispatch({ type: "DECLARATION_INIT" });
+      // dispatch({ type: "DECLARATION_YYS_INIT" });
 
       rootNavigation.dispatch(StackActions.replace(intro ? 'SignIn' : 'SignIn'));
     }

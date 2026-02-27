@@ -35,8 +35,6 @@ const PProject = () => {
   );
 
   const fetchData = () => {
-    console.log("fetch data girdim");
-    console.log("selectedAuthorizedFirm : " + selectedAuthorizedFirm)
     dispatch(listDeclaration(selectedAuthorizedFirm, currentPage, 4, filters));
   }
 

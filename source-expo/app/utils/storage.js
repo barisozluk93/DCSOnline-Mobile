@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from "qs";
 
-
 export const saveToken = async (authResponse) => {
   try {
     await AsyncStorage.setItem('authResponse', qs.stringify(authResponse));

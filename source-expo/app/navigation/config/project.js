@@ -8,6 +8,7 @@ import PDeclarationFilter from '@/screens/PDeclarationFilter';
 import Profile from '@/screens/Profile';
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@/navigation/components';
 import MNotification from '@/screens/MNotification';
+import PDashboardFilter from '@/screens/PDashboardFilter';
 
 export const NewsTabScreens = {
 
@@ -71,6 +72,12 @@ export default {
   },
   PDeclarationFilter: {
     component: PDeclarationFilter,
+    options: {
+      title: 'filter',
+    },
+  },
+  PDashboardFilter: {
+    component: PDashboardFilter,
     options: {
       title: 'filter',
     },

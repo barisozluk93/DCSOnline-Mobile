@@ -295,7 +295,8 @@
   "not_found": "Not Found",
   "project_management": "Project Management",
   "declaration": "Declaration",
-  "item": "Item",  
+  "item": "Article",  
+  "tareks": "Tareks",
   "tasks": "YYS Confirm",
   "success": "Success!",
   "success_message": "Transaction successfuly completed.",
@@ -401,6 +402,9 @@
   "by_suppliers": "By Suppliers",
   "by_transportation_type": "By Transportation Type",
   "total_number_of_items": "Total Number of Items",
-  "total_number_of_packages": "Total Number of Packages"
+  "total_number_of_packages": "Total Number of Packages",
+  "total_number_of_apps": "Total Number of Applications",
+  "transportation_type": "Transportation Type",
+  "dec_type": "Declaration Type"
 
 }

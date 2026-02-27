@@ -37,7 +37,6 @@ const PTask = () => {
 
   const confirmYYS = (item) => {
     approveYYS(item.beyannameid, item.musteriid).then(response => {
-      console.log("res : " + response);
       Toast.show({
         type: 'success',
         text1: t('success'),

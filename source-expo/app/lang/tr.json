@@ -151,7 +151,7 @@
   "check_out": "Check Out",
   "check_in": "Check In",
   "month": "Month",
-  "year": "Year",
+  "year": "Yıl",
   "select_mobile_wallet": "Select Your Mobile Wallet",
   "my_order": "My Order",
   "track_order": "Track Order",
@@ -296,6 +296,7 @@
   "project_management": "Project Management",
   "declaration": "Beyanname",
   "item": "Kalem",
+  "tareks": "Tareks",
   "tasks": "YYS Onay",
   "success": "Başarılı!",
   "success_message": "İşlem başarı ile gerçekleştirildi.",
@@ -401,5 +402,8 @@
   "by_suppliers": "Tedarikçilere Göre",
   "by_transportation_type": "Taşıma Şekline Göre",
   "total_number_of_items": "Toplam Kalem Sayısı",
-  "total_number_of_packages": "Toplam Kap Adedi"
+  "total_number_of_packages": "Toplam Kap Adedi",
+  "total_number_of_apps": "Toplam Başvuru Sayısı",
+  "transportation_type": "Taşıma Şekli",
+  "dec_type": "Beyan Tipi"
 }

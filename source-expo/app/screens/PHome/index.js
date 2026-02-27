@@ -1,18 +1,28 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View, TouchableOpacity } from 'react-native';
-import { BaseStyle, useTheme, BaseColor } from '@/config';
+import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { BaseColor, BaseStyle, useTheme } from '@/config';
 import * as Utils from '@/utils';
 import { Header, Dashboard, SafeAreaView, Text, TabTag, HeaderLargeTitleBadge, Tag, Icon } from '@/components';
 import styles from './styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import { getRequestIdRequest, tableauLoginRequest } from '@/apis/reportApi';
+import { useRef } from "react";
 
 const PHome = (props) => {
+  const dispatch = useDispatch();
   const { navigation } = props;
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
   const [dashboardData, setDashboardData] = useState([]);
+  const [requestId, setRequestId] = useState();
+  const [tableauToken, setTableauToken] = useState([]);
+  const [tableauSiteId, setTableauSiteId] = useState([]);
+  const controllerRef = useRef(null);
+  const { filter } = useSelector(state => state.dashboard);
 
   const DashboardData = [
     {
@@ -20,80 +30,85 @@ const PHome = (props) => {
       data:
         [
           {
+            id: '351056cc-f486-4217-8b29-4d76f36347b9',
             chartType: 'card',
             title: t('total_number_of_decs'),
-            description: '1.135',
-            footer: t('last_five_years'),
+            description: null,
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "file-invoice",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#58D68D",
               marginRight: 8
             }
           },
           {
+            id: '1030b0e3-af70-4298-ad3e-abef7e32ec8f',
             chartType: 'card',
             title: t('total_invoice_amount'),
-            description: '₺4.301M',
-            footer: t('last_five_years'),
+            description: null,
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "receipt",
             style: {
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               width: (Utils.getWidthDevice() - 28) / 2,
               backgroundColor: "#E5634D"
             }
           },
           {
+            id: 'fc187c3a-c2ce-4809-af12-d92fe971862c',
             chartType: 'card',
             title: t('total_value'),
-            description: '$121M',
-            footer: t('last_five_years'),
+            description: null,
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "dollar-sign",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#5DADE2",
               marginRight: 8
 
             }
           },
           {
+            id: '32cda9a8-03a4-4125-a14b-b0eec40bf1e3',
             chartType: 'card',
             title: t('total_tax'),
-            description: '₺980M',
-            footer: t('last_five_years'),
+            description: null,
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "lira-sign",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#FDC60A"
             }
           },
           {
+            id: '743f4fab-887e-4379-bd86-ae6d78de7ea0',
             chartType: 'bar',
             title: t('total_invoice_amount'),
-            description: '',
+            description: null,
             footer: '',
-            byParameter: t('by_month') + ' - ' + new Date().getFullYear(),
+            byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
             data: [
               {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                labels: [0],
                 datasets: [
                   {
-                    data: [6, 3, 2, 1, 2, 1, 1, 1, 1, 1]
+                    data: [0]
                   }
                 ]
               },
               {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                labels: [],
                 datasets: [
                   {
-                    data: [79, 61, 69, 21, 7, 31, 14, 26, 4, 28]
+                    data: []
                   }
                 ],
                 legend: ["₺M"]
@@ -101,7 +116,7 @@ const PHome = (props) => {
             ],
             style: {
               width: (Utils.getWidthDevice() - 20),
-              height: (Utils.heightTabView() - 140) / 2,
+              height: (Utils.heightTabView() - 212) / 2,
             }
           },
         ]
@@ -111,121 +126,43 @@ const PHome = (props) => {
       data:
         [
           {
+            id: '43d7498e-3b05-4e1c-be7c-723585352abb',
             chartType: 'pie',
             title: t('total_number_of_decs'),
-            description: '',
+            description: null,
             footer: '',
-            byParameter: t('by_dec_type') + ' - ' +  new Date().getFullYear(),
-            data: [
-              {
-                name: 'EX',
-                population: 883,
-                color: "#5DADE2",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'IM',
-                population: 214,
-                color: "#FF2D55",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'TR',
-                population: 15,
-                color: "#58D68D",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'AN',
-                population: 13,
-                color: "#e5634d",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'DI',
-                population: 10,
-                color: "#FDC60A",
-                legendFontColor: '#7F7F7F',
-              },
-            ],
+            byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 120) / 2,
+              height: (Utils.heightTabView() - 192) / 2,
               marginRight: 8
             }
           },
           {
+            id: '918ddc29-f428-4a52-89f7-745568afd698',
             chartType: 'pie',
             title: t('total_number_of_decs'),
-            description: '',
+            description: null,
             footer: '',
-            byParameter: t('by_transportation_type') + ' - ' + new Date().getFullYear(),
-            data: [
-              {
-                name: 'DENİZ',
-                population: 631,
-                color: "#5DADE2",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'HAVA',
-                population: 96,
-                color: "#FF2D55",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'KARA',
-                population: 408,
-                color: "#58D68D",
-                legendFontColor: '#7F7F7F',
-              },
-            ],
+            byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 120) / 2,
+              height: (Utils.heightTabView() - 192) / 2,
             }
           },
           {
+            id: '0c0cb4da-cce1-4a63-b0ed-0872d53cd168',
             chartType: 'progress',
             title: t('total_number_of_decs') + ' (Top 5)',
-            description: '',
+            description: null,
             footer: '',
-            byParameter: t('by_suppliers') + ' - ' + new Date().getFullYear(),
-            data: [
-              {
-                id: 1,
-                name: 'Penti Giyim Ticaret A.Ş.',
-                percent: 89.78,
-                numberOfDec: '896',
-              },
-              {
-                id: 2,
-                name: 'Yasmina Garments',
-                percent: 4.91,
-                numberOfDec: '49',
-              },
-              {
-                id: 3,
-                name: 'SHANGHAI LANSHENG LIGHT INDUSTRIAL PRODUCTS IMP. & EXP. CORP., LTD',
-                percent: 2.10,
-                numberOfDec: '21',
-              },
-              {
-                id: 4,
-                name: 'SUZHOU FOREFRONT GARMENTS TECHNOLOGY CO., LTD.',
-                percent: 1.90,
-                numberOfDec: '19',
-              },
-              {
-                id: 5,
-                name: 'PUNING JIJIE GARMENT MAKING CO.,LTD',
-                percent: 1.30,
-                numberOfDec: '13',
-              },
-            ],
+            byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: (Utils.getWidthDevice() - 20),
-              height: (Utils.heightTabView() - 140) / 2
+              height: (Utils.heightTabView() - 212) / 2
             }
           },
         ]
@@ -235,80 +172,85 @@ const PHome = (props) => {
       data:
         [
           {
+            id: "46a86dcd-b116-4b9d-b424-852f92ad317e",
             chartType: 'card',
             title: t('total_number_of_items'),
             description: '15.652',
-            footer: t('last_five_years'),
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "pencil-ruler",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#58D68D",
               marginRight: 8
             }
           },
           {
+            id: "f297e87a-997e-44cd-a0c6-da0ca280669e",
             chartType: 'card',
             title: t('total_invoice_amount'),
             description: '₺17.252M',
-            footer: t('last_five_years'),
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "receipt",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#E5634D"
             }
           },
           {
+            id: "e7ddb0b1-7a43-4d60-af4b-938e943bed52",
             chartType: 'card',
             title: t('total_value'),
             description: '$451M',
-            footer: t('last_five_years'),
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "dollar-sign",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#5DADE2",
               marginRight: 8
 
             }
           },
           {
+            id: "87151237-af5c-4581-a57a-40149acbb09e",
             chartType: 'card',
-            title:  t('total_number_of_packages'),
+            title: t('total_number_of_packages'),
             description: '21.462.196',
-            footer: t('last_five_years'),
+            footer: filter.vf_Yıl,
             byParameter: '',
             icon: "box",
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 140) / 4,
+              height: (Utils.heightTabView() - 212) / 4,
               backgroundColor: "#FDC60A"
             }
           },
           {
+            id: '711969e1-e2f5-4332-ab93-d09e0a01fee2',
             chartType: 'bar',
             title: t('total_invoice_amount'),
             description: '',
             footer: '',
-            byParameter: t('by_month') + ' - ' + new Date().getFullYear(),
+            byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
             data: [
               {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
+                labels: [0],
                 datasets: [
                   {
-                    data: [1464, 1364, 1657, 1198, 1759, 1078, 1559, 1593, 2278, 1700, 2]
+                    data: [0]
                   }
                 ]
               },
               {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
+                labels: [],
                 datasets: [
                   {
-                    data: [1225, 1741, 2089, 1637, 2428, 1626, 807, 1436, 1859, 2399, 5]
+                    data: []
                   }
                 ],
                 legend: ["₺M"]
@@ -316,7 +258,7 @@ const PHome = (props) => {
             ],
             style: {
               width: (Utils.getWidthDevice() - 20),
-              height: (Utils.heightTabView() - 140) / 2
+              height: (Utils.heightTabView() - 212) / 2
             }
           },
         ]
@@ -326,122 +268,44 @@ const PHome = (props) => {
       data:
         [
           {
+            id: 'fa6f00d8-1de0-4868-bdbb-95b36c49c420',
             chartType: 'pie',
             title: t('total_number_of_items'),
             description: '',
             footer: '',
-            byParameter: t('by_dec_type') + ' - ' + new Date().getFullYear(),
-            data: [
-              {
-                name: 'EX',
-                population: 13669,
-                color: "#5DADE2",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'IM',
-                population: 1268,
-                color: "#FF2D55",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'TR',
-                population: 223,
-                color: "#58D68D",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'AN',
-                population: 482,
-                color: "#e5634d",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'DI',
-                population: 10,
-                color: "#FDC60A",
-                legendFontColor: '#7F7F7F',
-              },
-            ],
+            byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 120) / 2,
+              height: (Utils.heightTabView() - 192) / 2,
               marginRight: 8
 
             }
           },
           {
+            id: '8ebb4376-4d5b-42af-8308-4f1a5586ce61',
             chartType: 'pie',
             title: t('total_number_of_items'),
             description: '',
             footer: '',
-            byParameter: t('by_transportation_type') + ' - ' + new Date().getFullYear(),
-            data: [
-              {
-                name: 'DENİZ',
-                population: 5864,
-                color: "#5DADE2",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'HAVA',
-                population: 2224,
-                color: "#FF2D55",
-                legendFontColor: '#7F7F7F',
-              },
-              {
-                name: 'KARA',
-                population: 7654,
-                color: "#58D68D",
-                legendFontColor: '#7F7F7F',
-              },
-            ],
+            byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 120) / 2
+              height: (Utils.heightTabView() - 192) / 2
             }
           },
           {
+            id: "a97658f5-2588-4c99-b2ee-776875cc9418",
             chartType: 'progress',
             title: t('total_number_of_items') + " (Top 5)",
             description: '',
             footer: '',
-            byParameter: t('by_suppliers') + ' - ' + new Date().getFullYear(),
-            data: [
-              {
-                id: 1,
-                name: 'Penti Giyim Ticaret A.Ş.',
-                percent: 89.48,
-                numberOfDec: '13.682',
-              },
-              {
-                id: 2,
-                name: 'ALPHA FASHION CO. LIMITED',
-                percent: 4.14,
-                numberOfDec: '633',
-              },
-              {
-                id: 3,
-                name: 'SC PENTI WORLD SRL',
-                percent: 3.49,
-                numberOfDec: '533',
-              },
-              {
-                id: 4,
-                name: 'YASMINA GARMENTS',
-                percent: 2.41,
-                numberOfDec: '368',
-              },
-              {
-                id: 5,
-                name: '',
-                percent: 0.48,
-                numberOfDec: '74',
-              },
-            ],
+            byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+            data: [],
             style: {
               width: Utils.getWidthDevice() - 20,
-              height: (Utils.heightTabView() - 140) / 2
+              height: (Utils.heightTabView() - 212) / 2
             }
           },
         ]
@@ -457,15 +321,43 @@ const PHome = (props) => {
       id: 'item',
       title: t('item'),
     },
+    {
+      id: 'tareks',
+      title: t('tareks'),
+    },
   ];
   const [tab, setTab] = useState(tabs[0]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+
+      const controller = new AbortController();
+      controllerRef.current = controller;
+
+      getRequestIdRequest(selectedAuthorizedFirm).then(requestIdResponse => {
+        setRequestId(requestIdResponse.data.requestId)
+        tableauLoginRequest().then(loginResponse => {
+          setTableauToken(loginResponse.token)
+          setTableauSiteId(loginResponse.siteId)
+        })
+      })
+
+      return () => {
+        dispatch({ type: 'DASHBOARD_INIT' });
+        controller.abort();
+      };
+    }, [tab, selectedAuthorizedFirm])
+  )
 
   useEffect(() => {
     setDashboardData(DashboardData.filter((data) => data.type === tab.id));
   }, [tab]);
 
   useEffect(() => {
-    const onChange = () => {  
+    const onChange = () => {
       setDashboardData([]);
       setTab(tabs[0]);
     };
@@ -478,13 +370,44 @@ const PHome = (props) => {
   const renderContent = () => {
     return (
       <View style={{ flex: 1, marginTop: 10 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingVertical: 16,
+            paddingLeft: 8,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            borderBottomColor: colors.border,
+          }}
+        >
+          <View style={{ flex: 1, alignItems: "flex-start" }}>
+            <Tag
+              gray
+              style={{
+                borderRadius: 3,
+                backgroundColor: BaseColor.kashmir,
+                paddingVertical: 3,
+              }}
+              textStyle={{
+                paddingHorizontal: 4,
+                fontSize: 15,
+                color: BaseColor.whiteColor,
+              }}
+              icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={15} />}
+              onPress={() => navigation.navigate("PDashboardFilter")}
+            >
+              {t("filter")}
+            </Tag>
+          </View>
+        </View>
+
         <TabTag
-          style={{height: 30}}
+          style={{ height: 30, marginTop: 10 }}
           tabs={tabs}
           tab={tab}
           onChange={(tabData) => setTab(tabData)}
         />
-        
+
         <FlatList
           contentContainerStyle={styles.paddingFlatList}
           horizontal
@@ -493,6 +416,10 @@ const PHome = (props) => {
           renderItem={({ item }) => (
             <Dashboard
               data={item.data}
+              tableauSiteId={tableauSiteId}
+              tableauToken={tableauToken}
+              requestId={requestId}
+              signal={controllerRef.current.signal}
               style={{
                 margin: 10,
               }}
@@ -508,13 +435,13 @@ const PHome = (props) => {
       <Header title={t('dashboard')}
         renderLeft={() => {
           if (authorizedFirms) {
-          return (
-            <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-              <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
-              <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
-            </TouchableOpacity>
-          );
-        }
+            return (
+              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
+                <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
+                <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
+              </TouchableOpacity>
+            );
+          }
         }}
         renderRight={() => {
           return (

@@ -4,7 +4,7 @@ import { refreshTokenRequest } from './authApi';
 import * as rootNavigation from '.././navigation/rootNavigation';
 
 const api = axios.create({
-  baseURL: 'https://dev-dcs-online.dcscustoms.com.tr/api',
+  baseURL: 'https://yeni-dcsonline.dcscustoms.com.tr/api',
 });
 
 let isRefreshing = false;
@@ -61,9 +61,6 @@ api.interceptors.response.use(
         const refreshToken = await loadRefreshToken();
         if (!refreshToken) {
           throw new Error("No refresh token");
-        }
-        else{
-           console.log("Refresh Token var!");
         }
 
         // Refresh isteği
