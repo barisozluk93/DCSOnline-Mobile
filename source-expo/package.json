@@ -32,6 +32,7 @@
     "expo-web-browser": "^15.0.9",
     "i18next": "21.6.7",
     "moment": "^2.29.1",
+    "papaparse": "^5.5.3",
     "prop-types": "15.8.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",

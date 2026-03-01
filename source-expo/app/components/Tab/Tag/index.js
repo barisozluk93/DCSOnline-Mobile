@@ -18,7 +18,7 @@ const TabTag = ({ tabs = [], tab = {}, onChange = () => {}, style = {}, disabled
             backgroundColor: tab.id === item.id ? colors.primary : 'transparent',
           }}
           textStyle={{
-            color: BaseColor.whiteColor,
+            color: colors.text,
           }}
           onPress={() => onChange(item)}
         >

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { FlatList, View, TouchableOpacity, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { BaseColor, BaseStyle, useTheme } from '@/config';
 import * as Utils from '@/utils';
 import { Header, Dashboard, SafeAreaView, Text, TabTag, HeaderLargeTitleBadge, Tag, Icon } from '@/components';
@@ -10,6 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { getRequestIdRequest, tableauLoginRequest } from '@/apis/reportApi';
 import { useRef } from "react";
+import WebView from 'react-native-webview';
 
 const PHome = (props) => {
   const dispatch = useDispatch();
@@ -19,9 +20,7 @@ const PHome = (props) => {
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
   const [dashboardData, setDashboardData] = useState([]);
   const [requestId, setRequestId] = useState();
-  const [tableauToken, setTableauToken] = useState([]);
-  const [tableauSiteId, setTableauSiteId] = useState([]);
-  const controllerRef = useRef(null);
+  const [tableauToken, setTableauToken] = useState();
   const { filter } = useSelector(state => state.dashboard);
 
   const DashboardData = [
@@ -30,93 +29,25 @@ const PHome = (props) => {
       data:
         [
           {
-            id: '351056cc-f486-4217-8b29-4d76f36347b9',
+            id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-ToplamBeyanname/YllaraGreBeyannameSaylar',
             chartType: 'card',
             title: t('total_number_of_decs'),
-            description: null,
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "file-invoice",
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#58D68D",
-              marginRight: 8
-            }
-          },
-          {
-            id: '1030b0e3-af70-4298-ad3e-abef7e32ec8f',
-            chartType: 'card',
-            title: t('total_invoice_amount'),
-            description: null,
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "receipt",
-            style: {
-              height: (Utils.heightTabView() - 212) / 4,
-              width: (Utils.getWidthDevice() - 28) / 2,
-              backgroundColor: "#E5634D"
-            }
-          },
-          {
-            id: 'fc187c3a-c2ce-4809-af12-d92fe971862c',
-            chartType: 'card',
-            title: t('total_value'),
-            description: null,
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "dollar-sign",
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#5DADE2",
-              marginRight: 8
-
-            }
-          },
-          {
-            id: '32cda9a8-03a4-4125-a14b-b0eec40bf1e3',
-            chartType: 'card',
-            title: t('total_tax'),
-            description: null,
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "lira-sign",
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#FDC60A"
-            }
-          },
-          {
-            id: '743f4fab-887e-4379-bd86-ae6d78de7ea0',
-            chartType: 'bar',
-            title: t('total_invoice_amount'),
-            description: null,
-            footer: '',
-            byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
-            data: [
-              {
-                labels: [0],
-                datasets: [
-                  {
-                    data: [0]
-                  }
-                ]
-              },
-              {
-                labels: [],
-                datasets: [
-                  {
-                    data: []
-                  }
-                ],
-                legend: ["₺M"]
-              },
-            ],
-            style: {
-              width: (Utils.getWidthDevice() - 20),
+              width: (Utils.getWidthDevice() - 28),
               height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
+            }
+          },
+          {
+            id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-ToplamFaturaTutar/YllaraGreFaturaTutar',
+            chartType: 'card',
+            title: t('total_invoice_amount'),
+            byParameter: t('last_five_years'),
+            style: {
+              height: (Utils.heightTabView() - 212) / 2,
+              width: (Utils.getWidthDevice() - 28),
+              backgroundColor: "#ffffff",
             }
           },
         ]
@@ -126,139 +57,107 @@ const PHome = (props) => {
       data:
         [
           {
-            id: '43d7498e-3b05-4e1c-be7c-723585352abb',
-            chartType: 'pie',
-            title: t('total_number_of_decs'),
-            description: null,
-            footer: '',
-            byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
-            data: [],
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 192) / 2,
-              marginRight: 8
-            }
-          },
-          {
-            id: '918ddc29-f428-4a52-89f7-745568afd698',
-            chartType: 'pie',
-            title: t('total_number_of_decs'),
-            description: null,
-            footer: '',
-            byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
-            data: [],
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 192) / 2,
-            }
-          },
-          {
-            id: '0c0cb4da-cce1-4a63-b0ed-0872d53cd168',
-            chartType: 'progress',
-            title: t('total_number_of_decs') + ' (Top 5)',
-            description: null,
-            footer: '',
-            byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
-            data: [],
-            style: {
-              width: (Utils.getWidthDevice() - 20),
-              height: (Utils.heightTabView() - 212) / 2
-            }
-          },
-        ]
-    },
-    {
-      type: 'item',
-      data:
-        [
-          {
-            id: "46a86dcd-b116-4b9d-b424-852f92ad317e",
-            chartType: 'card',
-            title: t('total_number_of_items'),
-            description: '15.652',
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "pencil-ruler",
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#58D68D",
-              marginRight: 8
-            }
-          },
-          {
-            id: "f297e87a-997e-44cd-a0c6-da0ca280669e",
-            chartType: 'card',
-            title: t('total_invoice_amount'),
-            description: '₺17.252M',
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "receipt",
-            style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#E5634D"
-            }
-          },
-          {
-            id: "e7ddb0b1-7a43-4d60-af4b-938e943bed52",
+            id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-ToplamKymet/YllaraGreKymet',
             chartType: 'card',
             title: t('total_value'),
-            description: '$451M',
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "dollar-sign",
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#5DADE2",
-              marginRight: 8
-
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
             }
           },
           {
-            id: "87151237-af5c-4581-a57a-40149acbb09e",
+            id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-ToplamVergi/YllaraGreToplamVergi',
             chartType: 'card',
-            title: t('total_number_of_packages'),
-            description: '21.462.196',
-            footer: filter.vf_Yıl,
-            byParameter: '',
-            icon: "box",
+            title: t('total_tax'),
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 212) / 4,
-              backgroundColor: "#FDC60A"
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
+            }
+          },
+        ]
+    },
+    {
+      type: 'declaration',
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-BeyanTipineGreToplamBeyannameSaylarveFaturaTutarlar/BeyanTipineGreBeyannameSaylar',
+          chartType: 'pie',
+          title: t('total_number_of_decs'),
+          byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-TamaeklineGreBeyannameSaylarveFaturaTutarlar/TamaeklineGreBeyannameSaylar',
+          chartType: 'pie',
+          title: t('total_number_of_decs'),
+          byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        },
+      ]
+    },
+    {
+      type: 'declaration',
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-AylaraGreToplamBeyannameSaylarveFaturaTutarlar/AylaraGreToplamBeyannameSaylarveFaturaTutarlar',
+          chartType: 'bar',
+          title: t('total_invoice_amount'),
+          byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff",
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-TedarikilereGreBeyannameSaylarveFaturaTutarlar/TedarikilereGreBeyannameSaylar',
+          chartType: 'progress',
+          title: t('total_number_of_decs') + ' (Top 5)',
+          byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        }
+      ]
+    },
+    {
+      type: 'item',
+      data:
+        [
+          {
+            id: "https://reports.dcscustoms.com.tr/views/KalemListesi-YllaraGreKalemSaylar/YllaraGreKalemSaylar",
+            chartType: 'card',
+            title: t('total_number_of_items'),
+            byParameter: t('last_five_years'),
+            style: {
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
             }
           },
           {
-            id: '711969e1-e2f5-4332-ab93-d09e0a01fee2',
-            chartType: 'bar',
+            id: "https://reports.dcscustoms.com.tr/views/KalemListesi-YllaraGreFaturaTutar/YllaraGreFaturaTutar",
+            chartType: 'card',
             title: t('total_invoice_amount'),
-            description: '',
-            footer: '',
-            byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
-            data: [
-              {
-                labels: [0],
-                datasets: [
-                  {
-                    data: [0]
-                  }
-                ]
-              },
-              {
-                labels: [],
-                datasets: [
-                  {
-                    data: []
-                  }
-                ],
-                legend: ["₺M"]
-              },
-            ],
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 20),
-              height: (Utils.heightTabView() - 212) / 2
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff"
             }
           },
         ]
@@ -268,47 +167,82 @@ const PHome = (props) => {
       data:
         [
           {
-            id: 'fa6f00d8-1de0-4868-bdbb-95b36c49c420',
-            chartType: 'pie',
-            title: t('total_number_of_items'),
-            description: '',
-            footer: '',
-            byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
-            data: [],
+            id: "https://reports.dcscustoms.com.tr/views/KalemListesi-YllaraGreKymet/YllaraGreKymet",
+            chartType: 'card',
+            title: t('total_value'),
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 192) / 2,
-              marginRight: 8
-
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
             }
           },
           {
-            id: '8ebb4376-4d5b-42af-8308-4f1a5586ce61',
-            chartType: 'pie',
-            title: t('total_number_of_items'),
-            description: '',
-            footer: '',
-            byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
-            data: [],
+            id: "https://reports.dcscustoms.com.tr/views/KalemListesi-YllaraGreToplamKap/YllaraGreToplamKap",
+            chartType: 'card',
+            title: t('total_number_of_packages'),
+            byParameter: t('last_five_years'),
             style: {
-              width: (Utils.getWidthDevice() - 28) / 2,
-              height: (Utils.heightTabView() - 192) / 2
-            }
-          },
-          {
-            id: "a97658f5-2588-4c99-b2ee-776875cc9418",
-            chartType: 'progress',
-            title: t('total_number_of_items') + " (Top 5)",
-            description: '',
-            footer: '',
-            byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
-            data: [],
-            style: {
-              width: Utils.getWidthDevice() - 20,
-              height: (Utils.heightTabView() - 212) / 2
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff"
             }
           },
         ]
+    },
+    {
+      type: 'item',
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/views/KalemListesi-BeyanTipineGreKalemSaylarveFaturaTutarlar/BeyanTipineGreKalemSaylar',
+          chartType: 'pie',
+          title: t('total_number_of_decs'),
+          byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TamaeklineGreKalemSaylarveFaturaTutarlar/TamaeklineGreKalemSaylar',
+          chartType: 'pie',
+          title: t('total_number_of_decs'),
+          byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        },
+      ]
+    },
+    {
+      type: 'item',
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-AylaraGreKalemSaylarveFaturaTutarlar/AylaraGreKalemSaylar',
+          chartType: 'bar',
+          title: t('total_invoice_amount'),
+          byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff"
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TedarikilereGreKalemSaylarveFaturaTutarlar/TedarikilereGreKalemSaylar',
+          chartType: 'progress',
+          title: t('total_number_of_decs') + ' (Top 5)',
+          byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: '#ffffff'
+          }
+        }
+      ]
     }
   ];
 
@@ -330,26 +264,15 @@ const PHome = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      if (controllerRef.current) {
-        controllerRef.current.abort();
-      }
-
-      const controller = new AbortController();
-      controllerRef.current = controller;
-
       getRequestIdRequest(selectedAuthorizedFirm).then(requestIdResponse => {
         setRequestId(requestIdResponse.data.requestId)
-        tableauLoginRequest().then(loginResponse => {
-          setTableauToken(loginResponse.token)
-          setTableauSiteId(loginResponse.siteId)
-        })
+        setTableauToken(requestIdResponse.data.token)
       })
 
       return () => {
         dispatch({ type: 'DASHBOARD_INIT' });
-        controller.abort();
       };
-    }, [tab, selectedAuthorizedFirm])
+    }, [tab, selectedAuthorizedFirm, filter])
   )
 
   useEffect(() => {
@@ -408,7 +331,7 @@ const PHome = (props) => {
           onChange={(tabData) => setTab(tabData)}
         />
 
-        <FlatList
+        {dashboardData && <FlatList
           contentContainerStyle={styles.paddingFlatList}
           horizontal
           data={dashboardData}
@@ -416,16 +339,14 @@ const PHome = (props) => {
           renderItem={({ item }) => (
             <Dashboard
               data={item.data}
-              tableauSiteId={tableauSiteId}
-              tableauToken={tableauToken}
               requestId={requestId}
-              signal={controllerRef.current.signal}
+              tableauToken={tableauToken}
               style={{
                 margin: 10,
               }}
             />
           )}
-        />
+        />}
       </View>
     );
   };
