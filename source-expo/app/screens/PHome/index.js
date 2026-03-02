@@ -19,8 +19,9 @@ const PHome = (props) => {
   const { colors } = useTheme();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
   const [dashboardData, setDashboardData] = useState([]);
-  const [requestId, setRequestId] = useState();
   const [tableauToken, setTableauToken] = useState();
+  const [requestId, setRequestId] = useState();
+
   const { filter } = useSelector(state => state.dashboard);
 
   const DashboardData = [
@@ -243,6 +244,85 @@ const PHome = (props) => {
           }
         }
       ]
+    },
+    {
+      type: 'tareks',
+      data:
+        [
+          {
+            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-ToplamBeyanname/BeyannameSays',
+            chartType: 'card',
+            style: {
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
+            }
+          },
+          {
+            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-ToplamBavuru/ToplamBavuru',
+            chartType: 'card',
+            style: {
+              width: (Utils.getWidthDevice() - 28),
+              height: (Utils.heightTabView() - 212) / 2,
+              backgroundColor: "#ffffff",
+            }
+          }
+        ]
+    },
+    {
+      type: "tareks",
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/authoring/TareksRaporu-AylaraGreBavuruSaylarveDeiimOranlar/AylaraGreDeiimoran',
+          chartType: 'bar',
+          title: t('tareks_distribution'),
+          byParameter: t('by_month'),
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff",
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-DurumlaraGreBavuruSaylarveYzdelikDalm/DurumlaraGreBavuruSaylar',
+          chartType: 'bar',
+          title: t('tareks_distribution'),
+          byParameter: t('by_situation'),
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff",
+          }
+        },
+      ]
+    },
+    {
+      type: "tareks",
+      data: [
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-AylaraGreBavuruSaylarveDeiimOranlar/AylaraGreDeiimoran',
+          chartType: 'bar',
+          title: t('tareks_change'),
+          byParameter: t('by_month'),
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff",
+          }
+        },
+        {
+          id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-MenelkelerineGreYllkBavuruSaylarveYzdelikDalm/MeneBazlDeiimoran',
+          chartType: 'bar',
+          title: t('tareks_distribution'),
+          byParameter: t('by_origin'),
+          style: {
+            width: (Utils.getWidthDevice() - 28),
+            height: (Utils.heightTabView() - 212) / 2,
+            backgroundColor: "#ffffff",
+          }
+        }
+
+      ]
     }
   ];
 
@@ -262,20 +342,53 @@ const PHome = (props) => {
   ];
   const [tab, setTab] = useState(tabs[0]);
 
+  const getRemainingTime = (token) => {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const payload = JSON.parse(atob(base64));
+
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp - currentTime; // Kalan saniye ⏱️
+    } catch (e) {
+      return 0;
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
-      getRequestIdRequest(selectedAuthorizedFirm).then(requestIdResponse => {
-        setRequestId(requestIdResponse.data.requestId)
-        setTableauToken(requestIdResponse.data.token)
-      })
+      let timeoutId;
+
+      const load = async () => {
+        getRequestIdRequest(selectedAuthorizedFirm).then(requestIdResponse => {
+          setTableauToken(requestIdResponse.data.token);
+          setRequestId(requestIdResponse.data.requestId);
+
+          const token = requestIdResponse.data.token;
+
+          const remainingSeconds = getRemainingTime(token);
+
+          const refreshIn = (remainingSeconds - 30) * 1000;
+
+          if (refreshIn > 0) {
+            timeoutId = setTimeout(() => {
+              load();
+            }, refreshIn);
+          }
+        });
+      };
+
+      load();
 
       return () => {
+        clearTimeout(timeoutId);
         dispatch({ type: 'DASHBOARD_INIT' });
       };
-    }, [tab, selectedAuthorizedFirm, filter])
+    }, [selectedAuthorizedFirm, tab, filter])
   )
 
   useEffect(() => {
+    setDashboardData([]);
     setDashboardData(DashboardData.filter((data) => data.type === tab.id));
   }, [tab]);
 
@@ -317,7 +430,7 @@ const PHome = (props) => {
                 color: BaseColor.whiteColor,
               }}
               icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={15} />}
-              onPress={() => navigation.navigate("PDashboardFilter")}
+              onPress={() => navigation.navigate("PDashboardFilter", { item: { tab: tab.id } })}
             >
               {t("filter")}
             </Tag>
@@ -331,7 +444,7 @@ const PHome = (props) => {
           onChange={(tabData) => setTab(tabData)}
         />
 
-        {dashboardData && <FlatList
+        {dashboardData && dashboardData.length > 0 && <FlatList
           contentContainerStyle={styles.paddingFlatList}
           horizontal
           data={dashboardData}
@@ -339,8 +452,9 @@ const PHome = (props) => {
           renderItem={({ item }) => (
             <Dashboard
               data={item.data}
-              requestId={requestId}
               tableauToken={tableauToken}
+              requestId={requestId}
+              tab={tab.id}
               style={{
                 margin: 10,
               }}

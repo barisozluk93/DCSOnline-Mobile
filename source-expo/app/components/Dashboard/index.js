@@ -10,8 +10,9 @@ import WebView from 'react-native-webview';
 const Dashboard = ({
   style = {},
   data = [],
-  requestId = null,
-  tableauToken = null
+  tableauToken,
+  requestId,
+  tab
 }) => {
   const { colors } = useTheme();
   const [loading, setLoading] = useState(false);
@@ -23,46 +24,72 @@ const Dashboard = ({
       try {
         setLoading(true);
 
-        const requestIdTag = requestId ? `<viz-filter field="requestid" value="${requestId}"></viz-filter>`: "";
-        const yilTag = filter["vf_Yıl"] ? `<viz-filter field="Yıl" value="${filter["vf_Yıl"]}"></viz-filter>`: "";
-        const tasimaSekliTag = filter["vf_Taşıma Şekli"] ? `<viz-filter field="Taşıma Şekli" value="${filter["vf_Taşıma Şekli"]}"></viz-filter>`: "";
-        const beyanTipiTag = filter["vf_Beyan Tipi"] ? `<viz-filter field="Beyan Tipi" value="${filter["vf_Beyan Tipi"]}"></viz-filter>`: "";
+        const requestIdParam = requestId ? `<viz-parameter name="RequestParam" value="${requestId}"></viz-parameter>` : "";
 
+        const requestIdFilter = requestId ? `<viz-filter field="requestid" value="${requestId}"></viz-filter>` : "";
+        const yilFilter = filter["vf_Yıl"] ? `<viz-filter field="Yıl" value="${filter["vf_Yıl"]}"></viz-filter>` : "";
+        const tasimaSekliFilter = filter["vf_Taşıma Şekli"] ? `<viz-filter field="Taşıma Şekli" value="${filter["vf_Taşıma Şekli"]}"></viz-filter>` : "";
+        const beyanTipiFilter = filter["vf_Beyan Tipi"] ? `<viz-filter field="Beyan Tipi" value="${filter["vf_Beyan Tipi"]}"></viz-filter>` : "";
+        
         data.forEach(graphic => {
-          if(graphic.chartType !== 'card') {
+          if (graphic.chartType !== 'card' && tab !== 'tareks') {
             graphic.byParameter = graphic.byParameter.split(' - ')[0] + " - " + filter.vf_Yıl;
           }
-          
+
           graphic.html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  html, body { margin:0; padding:0; height:100%; overflow:hidden; }
-  tableau-viz { width:100%; height:100%; display:block; }
-</style>
-<script type="module">
-  import { TableauViz } from 'https://reports.dcscustoms.com.tr/javascripts/api/tableau.embedding.3.latest.min.js';
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { margin:0; padding:0; height:100%; overflow:hidden; }
+    tableau-viz { width:100%; height:100%; display:block; }
+  </style>
+  <script type="module">
+  import { TableauViz, TableauEventType } from 'https://reports.dcscustoms.com.tr/javascripts/api/tableau.embedding.3.latest.min.js';
+
+  const viz = document.getElementById('tableau-viz');
+
+  // Viz yüklendiğinde filtreyi uygula 🏃‍♂️
+  viz.addEventListener(TableauEventType.FirstInteractive, async () => {
+    try {
+      const sheet = viz.workbook.activeSheet;
+      // Eğer dashboard ise içindeki sayfaları bulur
+      await sheet.applyRangeFilterAsync("Başvuru Tarihi", {
+        min: new Date("${filter["vf_ApplicationStartDate"]}"),
+        max: new Date("${filter["vf_ApplicationEndDate"]}")
+      });
+
+      await sheet.applyRangeFilterAsync("Tescil Tarihi", {
+        min: new Date("${filter["vf_RegisterationStartDate"]}"),
+        max: new Date("${filter["vf_RegisterationEndDate"]}")
+      });
+
+      console.log("Filtre başarıyla uygulandı! ✅");
+    } catch (err) {
+      console.error("Filtre hatası: ", err);
+    }
+  });
 </script>
-</head>
-<body>
-<tableau-viz
-  id="tableau-viz"
-  src="${graphic.id}"
-  token="${tableauToken}"
-  hide-tabs
-  toolbar="hidden"
-  device="phone">
+  </head>
+  <body>
+  <tableau-viz
+    id="tableau-viz"
+    src="${graphic.id}"
+    token="${tableauToken}"
+    hide-tabs
+    toolbar="hidden"
+    device="phone">
 
-  ${requestIdTag}
-  ${graphic.chartType !== 'card' ? yilTag : ''}
-  ${tasimaSekliTag}
-  ${beyanTipiTag}
+    ${tab !== "tareks" && requestIdFilter}
+    ${tab !== "tareks" && graphic.chartType !== "card" ? yilFilter : ''}
+    ${tab !== "tareks" && tasimaSekliFilter}
+    ${tab !== "tareks" && beyanTipiFilter}
+    ${tab === "tareks" && requestIdParam}
 
-</tableau-viz>
-</body>
-</html>`;
+  </tableau-viz>
+  </body>
+  </html>`;
 
         });
 
@@ -80,7 +107,7 @@ const Dashboard = ({
     }
 
 
-    if (data && data.length > 0 && filter && requestId, tableauToken) {
+    if (data && data.length > 0 && filter && requestId && tableauToken) {
       let temp = [];
       for (let i = 0; i < data.length; i += 1) {
         temp.push(data.slice(i, i + 1));
@@ -88,7 +115,7 @@ const Dashboard = ({
       setRows(temp);
       load();
     }
-  }, [requestId, filter, tableauToken])
+  }, [data, filter, requestId, tableauToken])
 
   return (
     <View style={[styles.container, style]}>
@@ -107,22 +134,27 @@ const Dashboard = ({
                 ]}
               >
                 <View style={styles.viewLeft}>
-                  <Text caption3 style={{color: "#000000"}}>{item.title}</Text>
-                  {item.byParameter && <Text style={{ fontSize: 14, color: "#000000"}} headline>{item.byParameter}</Text>}
-                  
+                  {item.title && <Text caption3 style={{ color: "#000000" }}>{item.title}</Text>}
+                  {item.byParameter && <Text style={{ fontSize: 14, color: "#000000" }} headline>{item.byParameter}</Text>}
+
                   <WebView
-                  style={{marginTop: 10}}
-                  originWhitelist={['*']}
-                  source={{ html: item.html }}
-                  javaScriptEnabled={true}
-                  domStorageEnabled={true}
-                  sharedCookiesEnabled={true}
-                  thirdPartyCookiesEnabled={true}
-                  incognito={false}
-                  onMessage={(event) => {
-                  }}
-                />
-                  
+                    style={{ marginTop: (item.title && item.byParameter) ? 10 : 0, }}
+                    originWhitelist={['*', 'http://*', 'https://*']}
+                    source={{
+                      html: item.html,
+                      baseUrl: 'https://reports.dcscustoms.com.tr'
+                    }}
+                    mixedContentMode="always"
+                    allowUniversalAccessFromFileURLs={true}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    sharedCookiesEnabled={true}
+                    thirdPartyCookiesEnabled={true}
+                    incognito={false}
+                    onMessage={(event) => {
+                    }}
+                  />
+
                 </View>
               </View>
             ))}
@@ -135,7 +167,6 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  requestId: PropTypes.string,
   data: PropTypes.array,
 };
 

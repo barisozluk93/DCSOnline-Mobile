@@ -301,6 +301,7 @@
   "success": "Başarılı!",
   "success_message": "İşlem başarı ile gerçekleştirildi.",
   "error": "Hata!",
+  "warning": "Uyarı!",
   "error_login_message": "Geçersiz kullanıcı adı veya şifre.",
   "error_file_message": "Bir hata oluştu.",
   "sure": "Bu işlemi gerçekleştirmek istediğinize emin misiniz?",
@@ -405,5 +406,15 @@
   "total_number_of_packages": "Toplam Kap Adedi",
   "total_number_of_apps": "Toplam Başvuru Sayısı",
   "transportation_type": "Taşıma Şekli",
-  "dec_type": "Beyan Tipi"
+  "dec_type": "Beyan Tipi",
+  "tareks_change": "Başvuru Kalem Sayısı ve Başvuru Değişim Oranı (%)",
+  "by_situation": "Duruma Göre",
+  "tareks_distribution": "Başvuru Kalem Sayısı ve Yüzdelik Dağılımı (%)",
+  "tescil_start_date": "Tescil Başlangıç Tarihi",
+  "tescil_end_date": "Tescil Bitiş Tarihi",
+  "application_start_date": "Başvuru Başlangıç Tarihi",
+  "application_end_date": "Başvuru Bitiş Tarihi",
+  "change_password_warning_message": "Şifre ve Şifre Tekrar aynı olmalıdır!",
+  "by_origin": "Menşei Ülkesi ve Yıllara Göre"
+
 }

@@ -32,6 +32,7 @@ const SignIn = (props) => {
       dispatch({ type: "USER_INIT" });
       dispatch({ type: "DECLARATION_INIT" });
       dispatch({ type: "DECLARATION_YYS_INIT" });
+      dispatch({ type: "DASHBOARD_INIT" });
     }
   }, [navigation]);
 
@@ -130,13 +131,13 @@ const SignIn = (props) => {
               {t('sign_in')}
             </Button>
           </View>
-          <View style={styles.contentActionBottom}>
+          {/* <View style={styles.contentActionBottom}>
             <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
               <Text body2 primaryColor>
                 {t('forgot_your_password')}
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

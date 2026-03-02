@@ -405,6 +405,15 @@
   "total_number_of_packages": "Total Number of Packages",
   "total_number_of_apps": "Total Number of Applications",
   "transportation_type": "Transportation Type",
-  "dec_type": "Declaration Type"
-
+  "dec_type": "Declaration Type",
+  "tareks_change": "Number of Application Articles and Application Change Rate (%)",
+  "by_situation": "By Condition",
+  "tareks_distribution": "Number of Application Articles and Percentage Distribution (%)",
+  "tescil_start_date": "Registeration Start Date",
+  "tescil_end_date": "Registeration End Date",
+  "application_start_date": "Application Start Date",
+  "application_end_date": "Application End Date",
+  "change_password_warning_message": "Password and Confirm Password must be the same!",
+  "warning": "Warning!",
+  "by_origin": "By Origin Country and Years"
 }

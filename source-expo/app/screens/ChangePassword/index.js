@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { BaseColor, BaseStyle, useTheme } from '@/config';
 import { Button, Header, Icon, SafeAreaView, Text, TextInput } from '@/components';
 import styles from './styles';
+import Toast from 'react-native-toast-message';
+import { changePasswordRequest } from '@/apis/userApi';
 
 const ChangePassword = (props) => {
   const { navigation } = props;
@@ -12,6 +14,35 @@ const ChangePassword = (props) => {
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const onPasswordChange = () => {
+    if (password === repassword) {
+      console.log("assadas");
+
+      changePasswordRequest(password).then(response => {
+        if (response.success) {
+          Toast.show({
+            type: 'success',
+            text1: t('success'),
+            text2: t('success_message'),
+          });
+        }
+      }).catch((error) => {
+        Toast.show({
+                  type: 'error',
+                  text1: t('error'),
+                  text2: error.response.data.error,
+                });
+      })
+    }
+    else {
+      Toast.show({
+        type: 'info',
+        text1: t('warning'),
+        text2: t('change_password_warning_message'),
+      });
+    }
+  }
 
   return (
     <SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
@@ -63,10 +94,7 @@ const ChangePassword = (props) => {
           loading={loading}
           full
           onPress={() => {
-            setLoading(true);
-            setTimeout(() => {
-              navigation.goBack();
-            }, 500);
+            onPasswordChange();
           }}
         >
           {t('confirm')}
