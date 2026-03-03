@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { NotificationEarlier, NotificationRecent } from '@/data/music';
 import { BaseStyle, useTheme } from '@/config';
-import { GridList, Header, Icon, SafeAreaView, Text, ThumbSquareSmall } from '@/components';
+import { GridList, Header, Icon, NotFound, SafeAreaView, Text, ThumbSquareSmall } from '@/components';
 
 const MNotification = ({ navigation }) => {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ const MNotification = ({ navigation }) => {
         }}
       />
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        <Text headline style={{ padding: 20, paddingBottom: 10 }}>
+        {/* <Text headline style={{ padding: 20, paddingBottom: 10 }}>
           {t('recents')}
         </Text>
         <GridList
@@ -51,7 +51,8 @@ const MNotification = ({ navigation }) => {
               onPress={() => {}}
             />
           )}
-        />
+        /> */}
+        <NotFound />
       </ScrollView>
     </SafeAreaView>
   );

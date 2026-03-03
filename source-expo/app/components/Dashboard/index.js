@@ -17,7 +17,6 @@ const Dashboard = ({
   const { colors } = useTheme();
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState([]);
-  const { filter } = useSelector(state => state.dashboard);
 
   useEffect(() => {
     const load = async () => {
@@ -25,15 +24,11 @@ const Dashboard = ({
         setLoading(true);
 
         const requestIdParam = requestId ? `<viz-parameter name="RequestParam" value="${requestId}"></viz-parameter>` : "";
-
         const requestIdFilter = requestId ? `<viz-filter field="requestid" value="${requestId}"></viz-filter>` : "";
-        const yilFilter = filter["vf_Yıl"] ? `<viz-filter field="Yıl" value="${filter["vf_Yıl"]}"></viz-filter>` : "";
-        const tasimaSekliFilter = filter["vf_Taşıma Şekli"] ? `<viz-filter field="Taşıma Şekli" value="${filter["vf_Taşıma Şekli"]}"></viz-filter>` : "";
-        const beyanTipiFilter = filter["vf_Beyan Tipi"] ? `<viz-filter field="Beyan Tipi" value="${filter["vf_Beyan Tipi"]}"></viz-filter>` : "";
         
         data.forEach(graphic => {
           if (graphic.chartType !== 'card' && tab !== 'tareks') {
-            graphic.byParameter = graphic.byParameter.split(' - ')[0] + " - " + filter.vf_Yıl;
+            graphic.byParameter = graphic.byParameter.split(' - ')[0];
           }
 
           graphic.html = `<!DOCTYPE html>
@@ -46,31 +41,8 @@ const Dashboard = ({
     tableau-viz { width:100%; height:100%; display:block; }
   </style>
   <script type="module">
-  import { TableauViz, TableauEventType } from 'https://reports.dcscustoms.com.tr/javascripts/api/tableau.embedding.3.latest.min.js';
-
-  const viz = document.getElementById('tableau-viz');
-
-  // Viz yüklendiğinde filtreyi uygula 🏃‍♂️
-  viz.addEventListener(TableauEventType.FirstInteractive, async () => {
-    try {
-      const sheet = viz.workbook.activeSheet;
-      // Eğer dashboard ise içindeki sayfaları bulur
-      await sheet.applyRangeFilterAsync("Başvuru Tarihi", {
-        min: new Date("${filter["vf_ApplicationStartDate"]}"),
-        max: new Date("${filter["vf_ApplicationEndDate"]}")
-      });
-
-      await sheet.applyRangeFilterAsync("Tescil Tarihi", {
-        min: new Date("${filter["vf_RegisterationStartDate"]}"),
-        max: new Date("${filter["vf_RegisterationEndDate"]}")
-      });
-
-      console.log("Filtre başarıyla uygulandı! ✅");
-    } catch (err) {
-      console.error("Filtre hatası: ", err);
-    }
-  });
-</script>
+    import { TableauViz,  TableauEventType, FilterUpdateType } from 'https://reports.dcscustoms.com.tr/javascripts/api/tableau.embedding.3.latest.min.js';
+  </script>
   </head>
   <body>
   <tableau-viz
@@ -80,13 +52,9 @@ const Dashboard = ({
     hide-tabs
     toolbar="hidden"
     device="phone">
-
-    ${tab !== "tareks" && requestIdFilter}
-    ${tab !== "tareks" && graphic.chartType !== "card" ? yilFilter : ''}
-    ${tab !== "tareks" && tasimaSekliFilter}
-    ${tab !== "tareks" && beyanTipiFilter}
-    ${tab === "tareks" && requestIdParam}
-
+          
+    ${graphic.type === "tareks" && requestIdParam}
+    ${graphic.type !== "tareks" && requestIdFilter}
   </tableau-viz>
   </body>
   </html>`;
@@ -107,7 +75,7 @@ const Dashboard = ({
     }
 
 
-    if (data && data.length > 0 && filter && requestId && tableauToken) {
+    if (data && data.length > 0 && requestId && tableauToken) {
       let temp = [];
       for (let i = 0; i < data.length; i += 1) {
         temp.push(data.slice(i, i + 1));
@@ -115,11 +83,11 @@ const Dashboard = ({
       setRows(temp);
       load();
     }
-  }, [data, filter, requestId, tableauToken])
+  }, [data, requestId, tableauToken])
 
   return (
     <View style={[styles.container, style]}>
-      {rows && rows.length && <View>
+      {tableauToken && requestId && rows && rows.length && <View>
         {rows.map((row, rowIndex) => (
           <View key={rowIndex} style={styles.row}>
             {row.map((item, colIndex) => (
@@ -139,7 +107,7 @@ const Dashboard = ({
 
                   <WebView
                     style={{ marginTop: (item.title && item.byParameter) ? 10 : 0, }}
-                    originWhitelist={['*', 'http://*', 'https://*']}
+                    originWhitelist={['https://reports.dcscustoms.com.tr', 'file://']}
                     source={{
                       html: item.html,
                       baseUrl: 'https://reports.dcscustoms.com.tr'
@@ -151,8 +119,12 @@ const Dashboard = ({
                     sharedCookiesEnabled={true}
                     thirdPartyCookiesEnabled={true}
                     incognito={false}
-                    onMessage={(event) => {
-                    }}
+                    saveFormDataDisabled={false}
+                    allowsInlineMediaPlayback={true}
+                     onMessage={(event) => {
+                      const message = JSON.parse(event.nativeEvent.data);
+                      console.log(message);
+                      }}
                   />
 
                 </View>

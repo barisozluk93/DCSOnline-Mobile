@@ -17,7 +17,7 @@ const ChangePassword = (props) => {
 
   const onPasswordChange = () => {
     if (password === repassword) {
-      console.log("assadas");
+      setLoading(true);
 
       changePasswordRequest(password).then(response => {
         if (response.success) {
@@ -26,6 +26,11 @@ const ChangePassword = (props) => {
             text1: t('success'),
             text2: t('success_message'),
           });
+
+          setTimeout(() => {
+            setLoading(false);
+            navigation.navigate("SignIn");
+          }, 500)
         }
       }).catch((error) => {
         Toast.show({

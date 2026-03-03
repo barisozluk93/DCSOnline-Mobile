@@ -22,8 +22,6 @@ const PHome = (props) => {
   const [tableauToken, setTableauToken] = useState();
   const [requestId, setRequestId] = useState();
 
-  const { filter } = useSelector(state => state.dashboard);
-
   const DashboardData = [
     {
       type: 'declaration',
@@ -36,7 +34,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -46,7 +44,7 @@ const PHome = (props) => {
             title: t('total_invoice_amount'),
             byParameter: t('last_five_years'),
             style: {
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               width: (Utils.getWidthDevice() - 28),
               backgroundColor: "#ffffff",
             }
@@ -64,7 +62,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -75,7 +73,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -88,10 +86,10 @@ const PHome = (props) => {
           id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-BeyanTipineGreToplamBeyannameSaylarveFaturaTutarlar/BeyanTipineGreBeyannameSaylar',
           chartType: 'pie',
           title: t('total_number_of_decs'),
-          byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+          byParameter: t('by_dec_type'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         },
@@ -99,10 +97,10 @@ const PHome = (props) => {
           id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-TamaeklineGreBeyannameSaylarveFaturaTutarlar/TamaeklineGreBeyannameSaylar',
           chartType: 'pie',
           title: t('total_number_of_decs'),
-          byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+          byParameter: t('by_transportation_type'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         },
@@ -115,10 +113,10 @@ const PHome = (props) => {
           id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-AylaraGreToplamBeyannameSaylarveFaturaTutarlar/AylaraGreToplamBeyannameSaylarveFaturaTutarlar',
           chartType: 'bar',
           title: t('total_invoice_amount'),
-          byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
+          byParameter: t('by_month'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff",
           }
         },
@@ -126,10 +124,10 @@ const PHome = (props) => {
           id: 'https://reports.dcscustoms.com.tr/views/BeyannameListesi-TedarikilereGreBeyannameSaylarveFaturaTutarlar/TedarikilereGreBeyannameSaylar',
           chartType: 'progress',
           title: t('total_number_of_decs') + ' (Top 5)',
-          byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+          byParameter: t('by_suppliers'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         }
@@ -146,7 +144,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -157,7 +155,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff"
             }
           },
@@ -174,7 +172,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -185,7 +183,7 @@ const PHome = (props) => {
             byParameter: t('last_five_years'),
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff"
             }
           },
@@ -197,22 +195,22 @@ const PHome = (props) => {
         {
           id: 'https://reports.dcscustoms.com.tr/views/KalemListesi-BeyanTipineGreKalemSaylarveFaturaTutarlar/BeyanTipineGreKalemSaylar',
           chartType: 'pie',
-          title: t('total_number_of_decs'),
-          byParameter: t('by_dec_type') + ' - ' + filter.vf_Yıl,
+          title: t('total_number_of_items'),
+          byParameter: t('by_dec_type'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         },
         {
           id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TamaeklineGreKalemSaylarveFaturaTutarlar/TamaeklineGreKalemSaylar',
           chartType: 'pie',
-          title: t('total_number_of_decs'),
-          byParameter: t('by_transportation_type') + ' - ' + filter.vf_Yıl,
+          title: t('total_number_of_items'),
+          byParameter: t('by_transportation_type'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         },
@@ -225,21 +223,21 @@ const PHome = (props) => {
           id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-AylaraGreKalemSaylarveFaturaTutarlar/AylaraGreKalemSaylar',
           chartType: 'bar',
           title: t('total_invoice_amount'),
-          byParameter: t('by_month') + ' - ' + filter.vf_Yıl,
+          byParameter: t('by_month'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff"
           }
         },
         {
           id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TedarikilereGreKalemSaylarveFaturaTutarlar/TedarikilereGreKalemSaylar',
           chartType: 'progress',
-          title: t('total_number_of_decs') + ' (Top 5)',
-          byParameter: t('by_suppliers') + ' - ' + filter.vf_Yıl,
+          title: t('total_number_of_items') + ' (Top 5)',
+          byParameter: t('by_suppliers'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: '#ffffff'
           }
         }
@@ -254,7 +252,7 @@ const PHome = (props) => {
             chartType: 'card',
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           },
@@ -263,7 +261,7 @@ const PHome = (props) => {
             chartType: 'card',
             style: {
               width: (Utils.getWidthDevice() - 28),
-              height: (Utils.heightTabView() - 212) / 2,
+              height: (Utils.heightTabView() - 140) / 2,
               backgroundColor: "#ffffff",
             }
           }
@@ -279,7 +277,7 @@ const PHome = (props) => {
           byParameter: t('by_month'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff",
           }
         },
@@ -290,7 +288,7 @@ const PHome = (props) => {
           byParameter: t('by_situation'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff",
           }
         },
@@ -306,7 +304,7 @@ const PHome = (props) => {
           byParameter: t('by_month'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff",
           }
         },
@@ -317,7 +315,7 @@ const PHome = (props) => {
           byParameter: t('by_origin'),
           style: {
             width: (Utils.getWidthDevice() - 28),
-            height: (Utils.heightTabView() - 212) / 2,
+            height: (Utils.heightTabView() - 140) / 2,
             backgroundColor: "#ffffff",
           }
         }
@@ -348,7 +346,7 @@ const PHome = (props) => {
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const payload = JSON.parse(atob(base64));
 
-      const currentTime = Math.floor(Date.now() / 1000);
+      const currentTime = Math.floor(Date.now() / 1400);
       return payload.exp - currentTime; // Kalan saniye ⏱️
     } catch (e) {
       return 0;
@@ -368,7 +366,7 @@ const PHome = (props) => {
 
           const remainingSeconds = getRemainingTime(token);
 
-          const refreshIn = (remainingSeconds - 30) * 1000;
+          const refreshIn = (remainingSeconds - 30) * 1400;
 
           if (refreshIn > 0) {
             timeoutId = setTimeout(() => {
@@ -382,9 +380,8 @@ const PHome = (props) => {
 
       return () => {
         clearTimeout(timeoutId);
-        dispatch({ type: 'DASHBOARD_INIT' });
       };
-    }, [selectedAuthorizedFirm, tab, filter])
+    }, [selectedAuthorizedFirm, tab])
   )
 
   useEffect(() => {
@@ -406,39 +403,8 @@ const PHome = (props) => {
   const renderContent = () => {
     return (
       <View style={{ flex: 1, marginTop: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingVertical: 16,
-            paddingLeft: 8,
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            borderBottomColor: colors.border,
-          }}
-        >
-          <View style={{ flex: 1, alignItems: "flex-start" }}>
-            <Tag
-              gray
-              style={{
-                borderRadius: 3,
-                backgroundColor: BaseColor.kashmir,
-                paddingVertical: 3,
-              }}
-              textStyle={{
-                paddingHorizontal: 4,
-                fontSize: 15,
-                color: BaseColor.whiteColor,
-              }}
-              icon={<Icon name="sliders-h" color={BaseColor.whiteColor} size={15} />}
-              onPress={() => navigation.navigate("PDashboardFilter", { item: { tab: tab.id } })}
-            >
-              {t("filter")}
-            </Tag>
-          </View>
-        </View>
-
         <TabTag
-          style={{ height: 30, marginTop: 10 }}
+          style={{ height: 30, marginTop: 10}}
           tabs={tabs}
           tab={tab}
           onChange={(tabData) => setTab(tabData)}
