@@ -61,7 +61,7 @@ const PDashboardFilter = (props) => {
   const today = new Date();
   const yıl = today.getFullYear();
   const ay = String(today.getMonth()+1).padStart(2, '0');
-  const gun = String(today.getDay()+1).padStart(2, '0');
+  const gun = String(today.getDate()).padStart(2, '0');
   const [tescilStartDate, setTescilStartDate] = useState();
   const [tescilEndDate, setTescilEndDate] = useState(yıl + "-" + ay + "-" + gun);
   const [basvuruStartDate, setBasvuruStartDate] = useState();
@@ -71,54 +71,37 @@ const PDashboardFilter = (props) => {
   const { filter } = useSelector(state => state.dashboard);
 
   useEffect(() => {
-      const today = new Date();
-      const yıl = today.getFullYear();
-      const ay = String(today.getMonth()+1).padStart(2, '0');
-      const gun = String(today.getDay()+1).padStart(2, '0');
+  const today = new Date();
+  const yil = today.getFullYear();
+  const ay = String(today.getMonth() + 1).padStart(2, '0');
+  const gun = String(today.getDate()).padStart(2, '0');
+  const todayStr = `${yil}-${ay}-${gun}`;
 
-      if (filter && filter["vf_Yıl"] || !isNullOrEmpty(filter["vf_Yıl"]) && !isNaN(filter["vf_Yıl"])) {
-        setYear(years.filter(f => f.key == filter["vf_Yıl"])[0]);
-      }
-      else{
-        setYear(years[0])
-      }
+  // YEAR
+  const y = filter?.["vf_Yıl"];
+  const yearObj = years.find(f => f.key == y) ?? years[0];
+  setYear(yearObj);
+  setYearId(yearObj.key);
 
-      if (filter && filter["vf_Beyan Tipi"] || !isNullOrEmpty(filter["vf_Beyan Tipi"]) && !isNaN(filter["vf_Beyan Tipi"])) {
-        setDeclarationType(declarationTypes.filter(f => f.key == filter["vf_Beyan Tipi"])[0]);
-      }
+  // DECLARATION TYPE (string)
+  const dec = filter?.["vf_Beyan Tipi"];
+  const decObj = declarationTypes.find(f => f.key === dec);
+  setDeclarationType(decObj);
+  setDeclarationTypeId(decObj?.key);
 
-      if (filter && filter["vf_Taşıma Şekli"] || !isNullOrEmpty(filter["vf_Taşıma Şekli"]) && !isNaN(filter["vf_Taşıma Şekli"])) {
-        setTransportationType(transportationTypes.filter(f => f.key == filter["vf_Taşıma Şekli"])[0]);
-      }
+  // TRANSPORTATION TYPE (string)
+  const trn = filter?.["vf_Taşıma Şekli"];
+  const trnObj = transportationTypes.find(f => f.key === trn);
+  setTransportationType(trnObj);
+  setTransportationTypeId(trnObj?.key);
 
-      if (filter && filter["vf_RegisterationStartDate"] || !isNullOrEmpty(filter["vf_RegisterationStartDate"]) && !isNaN(filter["vf_RegisterationStartDate"])) {
-        setTescilStartDate(filter["vf_RegisterationStartDate"]);
-      }
-      else{
-        setTescilStartDate("2025-01-01");
-      }
+  // DATES (string: "YYYY-MM-DD" or ISO)
+  setTescilStartDate(filter?.["vf_RegisterationStartDate"] ?? "2025-01-01");
+  setTescilEndDate(filter?.["vf_RegisterationEndDate"] ?? todayStr);
 
-      if (filter && filter["vf_RegisterationEndDate"] || !isNullOrEmpty(filter["vf_RegisterationEndDate"]) && !isNaN(filter["vf_RegisterationEndDate"])) {
-        setTescilEndDate(filter["vf_RegisterationEndDate"]);
-      }
-      else{
-        setTescilEndDate(yıl + "-" + ay + "-" + gun);
-      }
-
-      if (filter && filter["vf_ApplicationStartDate"] || !isNullOrEmpty(filter["vf_ApplicationStartDate"]) && !isNaN(filter["vf_ApplicationStartDate"])) {
-        setBasvuruStartDate(filter["vf_ApplicationStartDate"]);
-      }
-      else{
-        setBasvuruStartDate("2025-01-01");
-      }
-
-      if (filter && filter["vf_ApplicationEndDate"] || !isNullOrEmpty(filter["vf_ApplicationEndDate"]) && !isNaN(filter["vf_ApplicationEndDate"])) {
-        setBasvuruEndDate(filter["vf_ApplicationEndDate"]);
-      }
-      else{
-        setBasvuruEndDate(yıl + "-" + ay + "-" + gun);
-      }
-  }, [filter]);
+  setBasvuruStartDate(filter?.["vf_ApplicationStartDate"] ?? "2025-01-01");
+  setBasvuruEndDate(filter?.["vf_ApplicationEndDate"] ?? todayStr);
+}, [filter]);
 
   useEffect(() => {
     if (route?.params?.item) {
@@ -135,16 +118,36 @@ const PDashboardFilter = (props) => {
     setTransportationTypeId();
 
     setTescilStartDate("2025-01-01");
-    setBasvuruStartDate("2025-01-02");
+    setBasvuruStartDate("2025-01-01");
 
     const today = new Date();
     const yıl = today.getFullYear();
     const ay = String(today.getMonth()+1).padStart(2, '0');
-    const gun = String(today.getDay()+1).padStart(2, '0');
+    const gun = String(today.getDate()).padStart(2, '0');
 
     setTescilEndDate(yıl + "-" + ay + "-" + gun);
     setBasvuruEndDate(yıl + "-" + ay + "-" + gun);
   };
+
+  function getDatesBetween(startDate, endDate) {
+  const dates = [];
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  const current = new Date(start);
+
+  while (current <= end) {
+    const y = current.getFullYear();
+    const m = String(current.getMonth() + 1).padStart(2, "0");
+    const d = String(current.getDate()).padStart(2, "0");
+
+    dates.push(`${y}-${m}-${d}`);
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
+}
 
   const onFilter = () => {
     let filter = {};

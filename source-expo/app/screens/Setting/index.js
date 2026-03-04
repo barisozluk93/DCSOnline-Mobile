@@ -115,7 +115,7 @@ export default function Setting({ isShowHeader = true }) {
                 </Text>
               }
             />
-            <Item
+            {/* <Item
               title={t('theme')}
               iconName="palette"
               iconBackground={BaseColor.greenColor}
@@ -133,7 +133,7 @@ export default function Setting({ isShowHeader = true }) {
                   ]}
                 />
               }
-            />
+            /> */}
             <Item
               title={t('font')}
               iconName="font"

@@ -1,16 +1,10 @@
 const today = new Date();
 const yıl = today.getFullYear();
 const ay = String(today.getMonth()+1).padStart(2, '0');
-const gun = String(today.getDay()+1).padStart(2, '0');
+const gun = String(today.getDate()).padStart(2, '0');
 
 const initialState = {
-  filter: { 
-    vf_Yıl: new Date().getFullYear(),
-    vf_RegisterationStartDate: "2025-01-01",
-    vf_RegisterationEndDate: yıl + "-" + ay + "-" + gun,
-    vf_ApplicationStartDate: "2025-02-01",
-    vf_ApplicationEndDate: yıl + "-" + ay + "-" + gun,
-  }, 
+  filter: null, 
   error: null,
 };
 

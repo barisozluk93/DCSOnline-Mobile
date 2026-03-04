@@ -222,9 +222,7 @@ export const DefaultFont = 'Roboto';
 export const useTheme = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const forceDark = useSelector((state) => state.application.force_dark);
-  const themeStorage = useSelector((state) => state.application.theme);
-  const listTheme = ThemeSupport.filter((item) => item.theme === themeStorage);
-  const theme = listTheme.length > 0 ? listTheme[0] : DefaultTheme;
+  const theme = DefaultTheme;
 
   if (forceDark) {
     return { theme: theme.dark, colors: theme.dark.colors };

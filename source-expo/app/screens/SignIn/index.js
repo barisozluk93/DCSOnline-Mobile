@@ -32,6 +32,8 @@ const SignIn = (props) => {
       dispatch({ type: "USER_INIT" });
       dispatch({ type: "DECLARATION_INIT" });
       dispatch({ type: "DECLARATION_YYS_INIT" });
+      dispatch({ type: "DASHBOARD_INIT" });
+
     }
   }, [navigation]);
 
