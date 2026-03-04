@@ -100,11 +100,11 @@ const PTask = () => {
           }
         }}
         renderRight={() => {
-          return (
-            <View style={styles.notification}>
-              <HeaderLargeTitleBadge onPress={goToPage('MNotification')} />
-            </View>
-          );
+          // return (
+          //   <View style={styles.notification}>
+          //     <HeaderLargeTitleBadge onPress={goToPage('MNotification')} />
+          //   </View>
+          // );
         }}
         onPressRight={() => {
         }}
@@ -131,7 +131,7 @@ const PTask = () => {
         )}
       />}
       {loading ? (
-        <ActivityIndicator size="large" style={{ flex: 1 }} />
+        <ActivityIndicator size="large" color={colors.primary} style={{ flex: 1 }} />
       ) : null
       }
     </SafeAreaView>

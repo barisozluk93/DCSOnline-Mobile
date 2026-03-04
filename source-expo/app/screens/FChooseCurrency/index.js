@@ -57,7 +57,7 @@ export default function FChooseCurrency({ setModalVisible = null, value = {}, on
         }}
         renderRight={() => {
           if (loading) {
-            return <ActivityIndicator size="small" color={colors.primary} />;
+            return <ActivityIndicator size="large" color={colors.primary} />;
           } else {
             return (
               <Text headline primaryColor numberOfLines={1}>

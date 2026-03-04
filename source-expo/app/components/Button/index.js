@@ -54,8 +54,8 @@ export default function Button(props) {
       )}
       {loading ? (
         <ActivityIndicator
-          size="small"
-          color={outline ? colors.primary : BaseColor.whiteColor}
+          size="large"
+          color={colors.primary}
           style={{ paddingLeft: 5 }}
         />
       ) : null}

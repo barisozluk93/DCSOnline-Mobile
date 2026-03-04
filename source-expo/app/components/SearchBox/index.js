@@ -43,7 +43,7 @@ const SearchBox = forwardRef((props, ref) => {
       >
         {loading ? (
           <View>
-            <ActivityIndicator size="small" color={colors.primary} />
+            <ActivityIndicator size="large" color={colors.primary} />
           </View>
         ) : (
           <TouchableOpacity onPress={onSubmitEditing(keyword)}>

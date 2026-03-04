@@ -76,11 +76,11 @@ const PProject = () => {
           }
         }}
         renderRight={() => {
-          return (
-            <View style={styles.notification}>
-              <HeaderLargeTitleBadge onPress={goToPage('MNotification')} />
-            </View>
-          );
+          // return (
+          //   <View style={styles.notification}>
+          //     <HeaderLargeTitleBadge onPress={goToPage('MNotification')} />
+          //   </View>
+          // );
         }}
         onPressRight={() => {
         }}
@@ -102,7 +102,7 @@ const PProject = () => {
               gray
               style={{
                 borderRadius: 3,
-                backgroundColor: BaseColor.kashmir,
+                backgroundColor: colors.primary,
                 paddingVertical: 3,
               }}
               textStyle={{
@@ -179,7 +179,7 @@ const PProject = () => {
       />}
 
       {loading ? (
-        <ActivityIndicator size="large" style={{ flex: 1 }} />
+        <ActivityIndicator size="large" color={colors.primary} style={{ flex: 1 }} />
       ) : null
       }
       {showFilesAction && files && files.length > 0 && <ModalOption

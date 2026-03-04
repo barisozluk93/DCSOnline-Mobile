@@ -15,7 +15,7 @@ const Loading = () => {
       </View>
       <ActivityIndicator
         size="large"
-        color={colors.text}
+        color={colors.primary}
         style={{
           position: 'absolute',
           top: 260,

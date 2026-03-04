@@ -40,7 +40,7 @@ const CombinedChart = ({
       {/* {data && data.length > 0 && <ChartBarChart data={data[0]} /> } */}
     </View > :
       <View style={{ height: 220, alignItems: "center" }}>
-        <ActivityIndicator size={"large"} style={{ flex: 1 }} />
+        <ActivityIndicator size={"large"} color={colors.primary} style={{ flex: 1 }} />
       </View>
 
 

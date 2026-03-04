@@ -119,7 +119,7 @@ const PTask = () => {
           gray
           style={{
             borderRadius: 3,
-            backgroundColor: BaseColor.kashmir,
+            backgroundColor: colors.primary,
             marginHorizontal: 5,
             paddingVertical: 3,
           }}

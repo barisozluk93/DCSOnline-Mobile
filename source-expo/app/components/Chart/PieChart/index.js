@@ -77,7 +77,7 @@ const ChartPieChart = ({
       </View>
     </View>
       :
-      <ActivityIndicator size={"large"} style={{ flex: 1 }} />
+      <ActivityIndicator size={"large"} color={colors.primary} style={{ flex: 1 }} />
   );
 };
 
