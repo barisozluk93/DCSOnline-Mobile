@@ -176,7 +176,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TamaeklineGreKalemSaylarveFaturaTutarlar/TamaeklineGreKalemSaylar',
+            id: 'https://reports.dcscustoms.com.tr/views/KalemListesi-TamaeklineGreKalemSaylarveFaturaTutarlar/TamaeklineGreKalemSaylar',
             chartType: 'pie',
             title: t('total_number_of_items'),
             byParameter: t('by_transportation_type'),
@@ -187,7 +187,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-AylaraGreKalemSaylarveFaturaTutarlar/AylaraGreKalemSaylar',
+            id: 'https://reports.dcscustoms.com.tr/views/KalemListesi-AylaraGreKalemSaylarveFaturaTutarlar/AylaraGreKalemSaylar',
             chartType: 'bar',
             title: t('total_invoice_amount'),
             byParameter: t('by_month'),
@@ -198,7 +198,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/KalemListesi-TedarikilereGreKalemSaylarveFaturaTutarlar/TedarikilereGreKalemSaylar',
+            id: 'https://reports.dcscustoms.com.tr/views/KalemListesi-TedarikilereGreKalemSaylarveFaturaTutarlar/TedarikilereGreKalemSaylar',
             chartType: 'progress',
             title: t('total_number_of_items') + ' (Top 5)',
             byParameter: t('by_suppliers'),
@@ -215,7 +215,7 @@ const PHome = (props) => {
       data:
         [
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-ToplamBeyanname/BeyannameSays',
+            id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-ToplamBeyanname/BeyannameSays',
             chartType: 'card',
             style: {
               width: (Utils.getWidthDevice() - 28),
@@ -224,7 +224,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-ToplamBavuru/ToplamBavuru',
+            id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-ToplamBavuru/ToplamBavuru',
             chartType: 'card',
             style: {
               width: (Utils.getWidthDevice() - 28),
@@ -232,7 +232,7 @@ const PHome = (props) => {
               backgroundColor: "#ffffff",
             }
           }, {
-            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-AylaraGreBavuruSaylarveYzdelikDalm/AylaraGreBavuruSaylar',
+            id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-AylaraGreBavuruSaylarveYzdelikDalm/AylaraGreBavuruSaylar',
             chartType: 'bar',
             title: t('tareks_distribution'),
             byParameter: t('by_month'),
@@ -243,7 +243,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-DurumlaraGreBavuruSaylarveYzdelikDalm/DurumlaraGreBavuruSaylar',
+            id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-DurumlaraGreBavuruSaylarveYzdelikDalm/DurumlaraGreBavuruSaylar',
             chartType: 'bar',
             title: t('tareks_distribution'),
             byParameter: t('by_situation'),
@@ -265,7 +265,7 @@ const PHome = (props) => {
             }
           },
           {
-            id: 'https://reports.dcscustoms.com.tr/#/views/TareksRaporu-MenelkelerineGreYllkBavuruSaylarveYzdelikDalm/MeneBazlDeiimoran',
+            id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-MenelkelerineGreYllkBavuruSaylarveYzdelikDalm/MeneBazlDeiimoran',
             chartType: 'bar',
             title: t('tareks_distribution'),
             byParameter: t('by_origin'),
@@ -392,10 +392,10 @@ const PHome = (props) => {
   );
 
   useEffect(() => {
-    if((dashboardData[0].type === 'declaration' || dashboardData[0].type === 'item') && tab.id === 'tarkes') {
+    if(dashboardData && dashboardData[0] && (dashboardData[0].type === 'declaration' || dashboardData[0].type === 'item') && tab.id === 'tarkes') {
       dispatch({ type: 'DASHBOARD_INIT' });
     }
-    else  if(dashboardData[0].type === 'tareks' && (tab.id === 'declaration' || tab.id === 'item')){
+    else if(dashboardData && dashboardData[0] && dashboardData[0].type === 'tareks' && (tab.id === 'declaration' || tab.id === 'item')){
       dispatch({ type: 'DASHBOARD_INIT' });
     }
     
