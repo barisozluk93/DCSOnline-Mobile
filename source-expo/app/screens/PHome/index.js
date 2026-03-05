@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View, TouchableOpacity, StyleSheet } from "react-native";
 import { BaseColor, BaseStyle, useTheme } from "@/config";
@@ -21,7 +21,7 @@ const PHome = (props) => {
   const [requestId, setRequestId] = useState();
   const skipNextResetRef = useRef(false);
 
-  const DashboardData = [
+  const DashboardData = useMemo(() => [
     {
       type: 'declaration',
       data:
@@ -34,7 +34,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -45,7 +45,7 @@ const PHome = (props) => {
             style: {
               height: "100%",
               width: (Utils.getWidthDevice() - 28),
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -56,7 +56,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -67,7 +67,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -78,7 +78,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           },
           {
@@ -89,7 +89,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           },
           {
@@ -100,7 +100,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -111,7 +111,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           }
         ]
@@ -128,7 +128,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -139,7 +139,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff"
+              backgroundColor: "transparent"
             }
           },
           {
@@ -150,7 +150,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -161,7 +161,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff"
+              backgroundColor: "transparent"
             }
           },
           {
@@ -172,7 +172,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           },
           {
@@ -183,7 +183,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           },
           {
@@ -194,7 +194,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff"
+              backgroundColor: "transparent"
             }
           },
           {
@@ -205,7 +205,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: '#ffffff'
+              backgroundColor: "transparent"
             }
           }
         ]
@@ -220,7 +220,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -229,7 +229,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           }, {
             id: 'https://reports.dcscustoms.com.tr/views/TareksRaporu-AylaraGreBavuruSaylarveYzdelikDalm/AylaraGreBavuruSaylar',
@@ -239,7 +239,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -250,7 +250,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -261,7 +261,7 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           },
           {
@@ -272,12 +272,12 @@ const PHome = (props) => {
             style: {
               width: (Utils.getWidthDevice() - 28),
               height: "100%",
-              backgroundColor: "#ffffff",
+              backgroundColor: "transparent",
             }
           }
         ]
     },
-  ];
+  ]);
 
   const tabs = [
     {
@@ -293,7 +293,7 @@ const PHome = (props) => {
       title: t('tareks'),
     },
   ];
-  
+
   const [tab, setTab] = useState(tabs[0]);
 
 
@@ -332,7 +332,7 @@ const PHome = (props) => {
     }
   }, [selectedAuthorizedFirm]);
 
-   useFocusEffect(
+  useFocusEffect(
     useCallback(() => {
       if (skipNextResetRef.current) {
         skipNextResetRef.current = false;
@@ -392,13 +392,13 @@ const PHome = (props) => {
   );
 
   useEffect(() => {
-    if(dashboardData && dashboardData[0] && (dashboardData[0].type === 'declaration' || dashboardData[0].type === 'item') && tab.id === 'tarkes') {
+    if (dashboardData && dashboardData[0] && (dashboardData[0].type === 'declaration' || dashboardData[0].type === 'item') && tab.id === 'tarkes') {
       dispatch({ type: 'DASHBOARD_INIT' });
     }
-    else if(dashboardData && dashboardData[0] && dashboardData[0].type === 'tareks' && (tab.id === 'declaration' || tab.id === 'item')){
+    else if (dashboardData && dashboardData[0] && dashboardData[0].type === 'tareks' && (tab.id === 'declaration' || tab.id === 'item')) {
       dispatch({ type: 'DASHBOARD_INIT' });
     }
-    
+
     setDashboardData(DashboardData.filter((d) => d.type === tab.id));
   }, [tab]);
 
@@ -412,7 +412,7 @@ const PHome = (props) => {
   }, []);
 
   const renderContent = () => (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.card }}>
       <View
         style={{
           flexDirection: "row",
@@ -421,6 +421,7 @@ const PHome = (props) => {
           paddingLeft: 8,
           borderBottomWidth: StyleSheet.hairlineWidth,
           borderBottomColor: colors.border,
+          backgroundColor: colors.background
         }}
       >
         <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -438,19 +439,29 @@ const PHome = (props) => {
               color: BaseColor.whiteColor,
             }}
             icon={<Icon name="filter" color={BaseColor.whiteColor} size={15} />}
-            onPress={() => { skipNextResetRef.current = true; navigation.navigate("PDashboardFilter", { item: { tab: tab.id } })}}
+            onPress={() => { skipNextResetRef.current = true; navigation.navigate("PDashboardFilter", { item: { tab: tab.id } }) }}
           >
             {t("filter")}
           </Tag>
         </View>
       </View>
-
-      <TabTag
-        style={{ height: 30, marginTop: 10 }}
-        tabs={tabs}
-        tab={tab}
-        onChange={(tabData) => setTab(tabData)}
-      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: colors.border,
+          backgroundColor: colors.background,
+          height: 40
+        }}
+      >
+        <TabTag
+          style={{}}
+          tabs={tabs}
+          tab={tab}
+          onChange={(tabData) => setTab(tabData)}
+        />
+      </View>
 
       {!!dashboardData?.length && (
         <FlatList
@@ -470,7 +481,7 @@ const PHome = (props) => {
               requestId={requestId}
               tab={tab.id}
               onAuthExpired={refreshToken}
-              style={{ margin: 10 }}
+              style={{ margin: 10, backgroundColor: colors.background, borderRadius: 10 }}
             />
           )}
         />
@@ -484,19 +495,24 @@ const PHome = (props) => {
         title={t("dashboard")}
         renderLeft={() => {
           if (!authorizedFirms) return null;
+          const currentFirm = authorizedFirms.find((f) => f.musteriid == selectedAuthorizedFirm);
+
           return (
             <TouchableOpacity
+              activeOpacity={0.8}
               style={[styles.container, { borderColor: colors.border }]}
               onPress={() => navigation.navigate("PAuthorizedFirmFilter")}
             >
-              <Text numberOfLines={2} style={{ width: 95 }}>
-                {authorizedFirms.filter((f) => f.musteriid == selectedAuthorizedFirm)[0].name}
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail" // Uzun isimlerin sonuna ... koyar ama genişlik arttığı için daha çok kelime sığar
+                style={[styles.firmText, { color: colors.text }]}
+              >
+                {currentFirm?.name || t("select_firm")}
               </Text>
               <Icon
-                style={{ width: 25, paddingTop: 8 }}
                 name="angle-down"
-                size={20}
-                enableRTL={true}
+                size={18}
                 color={colors.text}
               />
             </TouchableOpacity>

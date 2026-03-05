@@ -7,7 +7,7 @@ export default StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     ...Platform.select({
       default: {
-        shadowColor: 'rgba(0,0,0, .2)',
+        shadowColor: 'rgba(f,f,f, .2)',
         shadowOffset: { height: 0, width: 0 },
         shadowOpacity: 3,
         shadowRadius: 3,

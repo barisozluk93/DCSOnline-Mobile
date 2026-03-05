@@ -54,7 +54,7 @@ const PTask = () => {
       fetchData();
 
       return () => {
-        dispatch({ type: 'DECLARATION_YYS_INIT'});
+        dispatch({ type: 'DECLARATION_YYS_INIT' });
       };
     }, [selectedAuthorizedFirm])
   );
@@ -62,7 +62,7 @@ const PTask = () => {
   const fetchData = () => {
     dispatch({ type: 'DECLARATION_YYS_LIST_REQUEST' });
     let yysList = [];
-    try{
+    try {
       listDeclarationYYSRequest(selectedAuthorizedFirm).then(response => {
         response.data.forEach(item => {
           getByRefId(item.refid).then(response1 => {
@@ -80,7 +80,7 @@ const PTask = () => {
           dispatch({ type: 'DECLARATION_YYS_LIST_SUCCESS', payload: response.data });
         }
       })
-    }catch (err) {
+    } catch (err) {
       dispatch({ type: 'DECLARATION_YYS_LIST_FAIL', payload: err.response?.data?.message || err.message });
     }
   }
@@ -90,14 +90,29 @@ const PTask = () => {
       <Header
         title={t('tasks')}
         renderLeft={() => {
-          if (authorizedFirms) {
-            return (
-              <TouchableOpacity style={[styles.container, { borderColor: colors.border }]} onPress={() => navigation.navigate('PAuthorizedFirmFilter')}>
-                <Text numberOfLines={2} style={{ width: 95 }}>{authorizedFirms.filter(f => f.musteriid == selectedAuthorizedFirm)[0].name}</Text>
-                <Icon style={{ width: 25, paddingTop: 8 }} name="angle-down" size={20} enableRTL={true} color={colors.text} />
-              </TouchableOpacity>
-            );
-          }
+          if (!authorizedFirms) return null;
+          const currentFirm = authorizedFirms.find((f) => f.musteriid == selectedAuthorizedFirm);
+
+          return (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={[styles.container, { borderColor: colors.border }]}
+              onPress={() => navigation.navigate("PAuthorizedFirmFilter")}
+            >
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail" // Uzun isimlerin sonuna ... koyar ama genişlik arttığı için daha çok kelime sığar
+                style={[styles.firmText, { color: colors.text }]}
+              >
+                {currentFirm?.name || t("select_firm")}
+              </Text>
+              <Icon
+                name="angle-down"
+                size={18}
+                color={colors.text}
+              />
+            </TouchableOpacity>
+          );
         }}
         renderRight={() => {
           // return (

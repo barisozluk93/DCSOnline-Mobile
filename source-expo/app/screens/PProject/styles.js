@@ -1,3 +1,4 @@
+import { getWidthDevice } from '@/utils';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -12,14 +13,26 @@ export default StyleSheet.create({
   notification: {
     position: 'relative',
   },
-   container: {
-    height: 50,
-    width: 120,
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // İkon ve metni iki uca yayar
+    height: 40,
+    width: getWidthDevice() * 0.3, // Ekranın neredeyse yarısı kadar yer açar
     borderRadius: 8,
     borderWidth: 1,
-    flexDirection: 'row',
-    paddingTop: 8,
-    paddingLeft: 5,
-    marginLeft: -15
+    paddingHorizontal: 10,
+    marginLeft: -15, // Sol kenara (Filtre butonu hizasına) yaslar
+    backgroundColor: 'transparent',
   },
+  firmText: {
+    fontSize: 13,
+    fontWeight: '600',
+    flex: 1, // Metnin sığdığı kadar uzamasını sağlar
+    marginRight: 5,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
