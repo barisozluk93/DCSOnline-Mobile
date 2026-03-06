@@ -415,6 +415,7 @@
   "application_start_date": "Başvuru Başlangıç Tarihi",
   "application_end_date": "Başvuru Bitiş Tarihi",
   "change_password_warning_message": "Şifre ve Şifre Tekrar aynı olmalıdır!",
-  "by_origin": "Menşei Ülkesi ve Yıllara Göre"
-
+  "by_origin": "Menşei Ülkesi ve Yıllara Göre",
+  "English": "İngilizce",
+  "Turkish": "Türkçe"
 }

@@ -415,5 +415,7 @@
   "application_end_date": "Application End Date",
   "change_password_warning_message": "Password and Confirm Password must be the same!",
   "warning": "Warning!",
-  "by_origin": "By Origin Country and Years"
+  "by_origin": "By Origin Country and Years",
+  "English": "English", 
+  "Turkish": "Turkish"
 }
