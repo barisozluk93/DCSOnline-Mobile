@@ -1,14 +1,14 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { FlatList, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { Header, Text, SafeAreaView, HeaderLargeTitleBadge, DeclarationYYS, Icon, NotFound } from '@/components';
+import { FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Header, Text, SafeAreaView, DeclarationYYS, Icon, NotFound, ModalOption } from '@/components';
 import { BaseStyle, useTheme } from '@/config';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { approveYYS, getByRefId, getDetailById, listDeclarationYYSRequest } from '@/apis/declarationApi';
+import { approveYYS, getByRefId, getDetailById, listDeclarationArchieveRequest, listDeclarationYYSRequest } from '@/apis/declarationApi';
 import Toast from 'react-native-toast-message';
 import { Alert } from 'react-native';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 const PTask = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,10 @@ const PTask = () => {
   const { t } = useTranslation();
   const { authorizedFirms, selectedAuthorizedFirm } = useSelector((state) => state.user);
   const { loading, declarations } = useSelector((state) => state.declarationYYS);
+  const [showFilesAction, setShowFilesAction] = useState(false);
+  const [beyannameid, setBeyannameid] = useState(undefined);
+  const [files, setFiles] = useState([]);
+  const [selectedFileOption, setSelectedFileOption] = useState();
 
   const goToPage = (pageName) => () => navigation.navigate(pageName);
 
@@ -58,6 +62,30 @@ const PTask = () => {
       };
     }, [selectedAuthorizedFirm])
   );
+
+  const setSelectedItem = (beyannameid) => {
+    setSelectedFileOption();
+    setBeyannameid(beyannameid);
+    listDeclarationArchieveRequest(beyannameid).then(response => {
+      let list = [];
+      setFiles([]);
+          console.log(response)
+
+      response.forEach(element => {
+        list.push({ value: element.arsivid + "", text: element.ad })
+      });
+
+      setFiles([...list]);
+      setShowFilesAction(true);
+    });
+  }
+
+  const fileOptionSelected = (value) => {
+    setSelectedFileOption(value);
+    setShowFilesAction(false);
+
+    navigation.navigate('PProjectView', { item: { refid: declarations.filter(f => f.beyannameid === beyannameid)[0].refid, arsivid: value.value, beyannameid: beyannameid } });
+  };
 
   const fetchData = () => {
     dispatch({ type: 'DECLARATION_YYS_LIST_REQUEST' });
@@ -138,6 +166,7 @@ const PTask = () => {
             rejimTip={item.beyan1}
             gonderici={item.gondericiad}
             alici={item.aliciad}
+            onOption={() => setSelectedItem(item.beyannameid)}
             onApprove={() => confirmYYSApprove(item)}
             style={{
               marginBottom: 20,
@@ -149,6 +178,20 @@ const PTask = () => {
         <ActivityIndicator size="large" color={colors.primary} style={{ flex: 1 }} />
       ) : null
       }
+      {showFilesAction && files && files.length > 0 && <ModalOption
+        value={selectedFileOption}
+        options={files}
+        isVisible={showFilesAction}
+        onSwipeComplete={() => {
+          setShowFilesAction(false);
+        }}
+        onPress={(value) => {
+          fileOptionSelected(value)
+        }}
+        onBackdropPress={() => {
+          setShowFilesAction(false)
+        }}
+      />}
     </SafeAreaView>
   );
 };

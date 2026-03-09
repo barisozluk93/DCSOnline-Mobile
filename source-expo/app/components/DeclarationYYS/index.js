@@ -15,7 +15,8 @@ const DeclarationYYS = ({
   rejimTip,
   gonderici,
   alici,
-  onApprove,
+  onOption,
+  onApprove
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -124,9 +125,14 @@ const DeclarationYYS = ({
               {rejim}
             </Tag>
           </View>
-            <TouchableOpacity hitSlop={{ top: 10, right: 10, left: 10 }} style={{ paddingLeft: 16 }} onPress={onApprove}>
+          <TouchableOpacity hitSlop={{ top: 10, right: 10, left: 10 }} style={{ paddingLeft: 16 }} onPress={onApprove}>
               <Icon name="check-circle" size={30} solid color={BaseColor.yellowColor} />
             </TouchableOpacity>
+          <View style={{ alignItems: 'flex-end', paddingLeft: 5 }}>
+            <TouchableOpacity hitSlop={{ top: 10, right: 10, left: 10 }} style={{ paddingLeft: 16 }} onPress={onOption}>
+              <Icon name="ellipsis-h" size={14} color={colors.text} />
+            </TouchableOpacity>
+          </View>
         </View>
         <Text
           caption2
@@ -167,7 +173,8 @@ DeclarationYYS.propTypes = {
   description: PropTypes.string,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   completedTickets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onApprove: PropTypes.func,
+  onOption: PropTypes.func,
+  onApprove: PropTypes.func
 };
 
 export default DeclarationYYS;
