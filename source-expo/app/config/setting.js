@@ -2,8 +2,8 @@
  * Basic Setting Variables Define
  */
 export const BaseSetting = {
-  name: 'DCS Online',
-  displayName: 'DCS Online',
+  name: 'DCS Mobile',
+  displayName: 'DCS Mobile',
   appVersion: '0.0.1',
   defaultLanguage: 'tr',
   languageSupport: [
