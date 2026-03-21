@@ -1,5 +1,4 @@
 import authApi from './authAxiosClient';
-import api from './axiosClient';
 
 const client_id = "mobile-app-client";
 

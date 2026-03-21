@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Icon, Text } from '@/components';
 import { BaseColor, BaseStyle, useTheme } from '@/config';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getMenuRequest } from '@/apis/menuApi';
 
 export const tabBarIcon = ({ color, name }) => <Icon name={name} size={20} solid color={color} />;
 
@@ -40,6 +42,30 @@ const BottomTab = createBottomTabNavigator();
 export const BottomTabNavigatorMazi = ({ tabScreens = {} }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { selectedAuthorizedFirm } = useSelector((state) => state.user);
+  const [ dashboardVisibility, setDashboardVisibility ] = useState(true);
+  const [ yysVisibility, setYYSVisibility ] = useState(true);
+
+  const fetchMenuData = () => {
+          console.log("firm" + selectedAuthorizedFirm)
+    getMenuRequest(selectedAuthorizedFirm).then(response => {
+      console.log("response" + response)
+
+      if(!response.data || response.data.length === 0) {
+        setDashboardVisibility(false);
+        setYYSVisibility(false);
+      }
+      else{
+        setDashboardVisibility(true);
+        setYYSVisibility(true);
+      }
+    })
+  }
+
+  useEffect(() => {
+    console.log("girdimmmm menu")
+    // fetchMenuData();
+  }, [selectedAuthorizedFirm])
 
   return (
     <BottomTab.Navigator
@@ -59,17 +85,25 @@ export const BottomTabNavigatorMazi = ({ tabScreens = {} }) => {
     >
       {Object.keys(tabScreens).map((name, index) => {
         const { options, component } = tabScreens[name];
-        return (
-          <BottomTab.Screen
-            key={index}
-            name={name}
-            component={component}
-            options={{
-              ...options,
-              title: t(options.title),
-            }}
-          />
-        );
+        if(options.title === 'dashboard' && !dashboardVisibility) {
+          return (<></>);
+        }
+        else if(options.title === 'tasks' && !yysVisibility) {
+          return (<></>);
+        }
+        else{
+          return (
+            <BottomTab.Screen
+              key={index}
+              name={name}
+              component={component}
+              options={{
+                ...options,
+                title: t(options.title),
+              }}
+            />
+          );
+        }
       })}
     </BottomTab.Navigator>
   );
