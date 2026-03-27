@@ -50,7 +50,7 @@ const ChangePassword = (props) => {
   }
 
   return (
-    <SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
+    <SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left', 'bottom']}>
       <Header
         title={t('change_password')}
         renderLeft={() => {

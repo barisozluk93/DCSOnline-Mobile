@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "DCS Mobile",
-    "version": "0.0.1",
+    "slug": "dcs-online",
+    "version": "0.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

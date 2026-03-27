@@ -8,6 +8,7 @@ import Button from '@/components/Button';
 import Text from '@/components/Text';
 import Icon from '@/components/Icon';
 import styles from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ModalOption = (props) => {
   const { colors } = useTheme();
@@ -62,7 +63,7 @@ const ModalOption = (props) => {
 
   return (
     <Modal onBackdropPress={() => { onBackdropPressApply() }} swipeDirection={['down']} style={styles.bottomModal} {...attrs}>
-      <View style={[styles.contentFilterBottom, { backgroundColor: cardColor }]}>
+      <SafeAreaView edges={['bottom']} style={[styles.contentFilterBottom, { backgroundColor: cardColor }]}>
         <View style={styles.contentSwipeDown}>
           <View style={styles.lineSwipeDown} />
         </View>
@@ -105,7 +106,7 @@ const ModalOption = (props) => {
             {t('apply')}
           </Button>
         )}
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };

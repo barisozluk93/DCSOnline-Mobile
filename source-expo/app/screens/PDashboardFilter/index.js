@@ -187,7 +187,7 @@ const PDashboardFilter = (props) => {
   };
 
   return (
-    <SafeAreaView style={[BaseStyle.safeAreaView]} edges={['right', 'top', 'left']}>
+    <SafeAreaView style={[BaseStyle.safeAreaView]} edges={['right', 'top', 'left', 'bottom']}>
       <Header
         title={t('filtering')}
         renderLeft={() => {
