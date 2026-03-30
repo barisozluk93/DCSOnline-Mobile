@@ -4,7 +4,7 @@
 export const BaseSetting = {
   name: 'DCS Mobile',
   displayName: 'DCS Mobile',
-  appVersion: '0.0.4',
+  appVersion: '0.0.5',
   defaultLanguage: 'tr',
   languageSupport: [
     'en',
